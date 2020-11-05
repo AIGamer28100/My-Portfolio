@@ -11,7 +11,7 @@
   </p>
   {{ post.body|linebreaks }}
   <p>
-    <a href="{% url "blog:post_share" post.id %}">
+    <a href="{% url 'blog:post_share' post.id %}">
       Share this Post
     </a>
   </p>
@@ -20,12 +20,21 @@
     <h2>Your Comments has been added.</h2>
   {% else %}
     <h2>Add a new Comment</h2>
-    <form action="." method="post">
+    <form class="form" action="." method="post">
       {% csrf_token %}
-      <input type="text" name="Name" placeholder="Enter Your Name*" required>
-      <input type="email" name="email" placeholder="Enter your Mail-ID*" required>
-      <textarea name="body" rows="8" placeholder="Add your a new comment here" required></textarea>
-      <input type="submit" value="Add comment">
+      <div class="form-group row">
+        <label for="Name" class="col-sm-2 h4">Name : </label>
+        <input class="form-control col-sm-8" id="title" type="text" class="form-control" name="Name" placeholder="Enter Your Name*" required>
+      </div>
+      <div class="form-group row">
+        <label for="EID" class="col-sm-2 h4">E-Mail Id : </label>
+        <input class="form-control col-sm-8" id="EID" type="email" name="email" placeholder="Enter your Mail-ID*" required>
+      </div>
+      <div class="form-group row">
+        <label for="content" class="col-sm-2 h4">Comments : </label>
+        <textarea class="form-control col-sm-8" id="content" name="body" rows="8" placeholder="Add your a new comment here" required></textarea>
+      </div>
+      <input class="btn btn-primary" type="submit" value="Add comment">
     </form>
   {% endif %}
   <br><br><hr><br>
