@@ -21,7 +21,6 @@ Jinja2
 Keras
 Keras-Preprocessing
 keyring
-language-selector
 launchpadlib
 lazr.restfulclient
 lazr.uri
