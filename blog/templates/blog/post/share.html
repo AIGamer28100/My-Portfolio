@@ -12,10 +12,22 @@
     <h1>Share "{{ post.title }}" by email</h1>
     <form action="." method="post">
       {% csrf_token %}
-      <input type="text" name="name" placeholder="Enter Your Name *" required>
-      <input type="email" name="from" value="From Mail Id *" required>
-      <input type="email" name="to" value="To Mail Id *" required>
-      <textarea name="comments" rows="8" cols="80" placeholder="Enter your comment "></textarea>
+      <div class="form-group row">
+        <label for="name" class="col-sm-2 h4">Name</label>
+        <input class="form-control col-sm-8" type="text" id="name"name="name" placeholder="Enter Your Name *" required>
+      </div>
+      <div class="form-group row">
+        <label for="from" class="col-sm-2 h4">From</label>
+        <input class="form-control col-sm-8" type="email" id="from" name="from" value="From Mail Id *" required>
+      </div>
+      <div class="form-group row">
+        <label for="to" class="col-sm-2 h4">To</label>
+        <input class="form-control col-sm-8" type="email" name="to" value="To Mail Id *" required>
+      </div>
+      <div class="form-group row">
+        <label for="Comment" class="col-sm-2 h4">Comments</label>
+        <textarea class="form-control col-sm-8" id="comment" name="comments" rows="8" placeholder="Enter your comment "></textarea>
+      </div>
       <input type="submit" value="Send e-mail">
     </form>
   {% endif %}
