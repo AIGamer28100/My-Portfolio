@@ -21,7 +21,6 @@ Jinja2
 Keras
 Keras-Preprocessing
 keyring
-kiwisolver
 language-selector
 launchpadlib
 lazr.restfulclient
