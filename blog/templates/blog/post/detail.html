@@ -1,0 +1,50 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+  {{ post.title }}
+{% endblock %}
+
+{% block content %}
+  <h1>{{ post.title }}</h1><hr>
+  <p class="date text-muted small">
+    Published {{ post.publish }} by {{ post.author }}
+  </p>
+  {{ post.body|linebreaks }}
+  <p>
+    <a href="{% url "blog:post_share" post.id %}">
+      Share this Post
+    </a>
+  </p>
+  <br><br><hr><br>
+  {% if new_comment %}
+    <h2>Your Comments has been added.</h2>
+  {% else %}
+    <h2>Add a new Comment</h2>
+    <form action="." method="post">
+      {% csrf_token %}
+      <input type="text" name="Name" placeholder="Enter Your Name*" required>
+      <input type="email" name="email" placeholder="Enter your Mail-ID*" required>
+      <textarea name="body" rows="8" cols="80" placeholder="Add your a new comment here" required></textarea>
+      <input type="submit" value="Add comment">
+    </form>
+  {% endif %}
+  <br><br><hr><br>
+  {% with comments.count as total_comments %}
+    <h2>
+      {{ total_comments }} comment{{ total_comments|pluralize }}
+    </h2>
+  {% endwith %}
+  {% for comment in comments %}
+    <div class="comment">
+      <h3>Comment by <b>{{ comment.name }} <small class="small text-muted">({{ comment.email }})</small></b></h3>
+      <br>
+      <p class="info text-muted small">
+        {{ comment.created }}
+      </p>
+      {{ comment.body|linebreaks }}
+      <br><hr><br>
+    </div>
+  {% empty %}
+    <p>There are no comments yet.</p>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+  My Blog
+{% endblock %}
+
+{% block content %}
+  <div class="sticky-top bg-white py-3">
+    <h1>ALL Posts</h1>
+    <hr>
+  </div>
+  {% for post in posts %}
+    <div class="bg-white m-3">
+      <h2>
+        <a href="{{ post.get_absolute_url }}">
+          {{ post.title }}
+        </a><hr>
+      </h2><br>
+      <pre>{{ post.body| linebreaks| truncatewords:30 }}</pre>
+      <p class="date text-muted small float-right">
+        Published {{ post.publish }} by {{ post.author }}
+      </p>
+    </div>
+  {% empty %}
+    <div class="bg-white m-3">
+      <h2>
+        <a href="">
+          There are no Posts Yet !
+        </a>
+        <hr>
+      </h2>
+    </div>
+  {% endfor %}
+  <div class="fixed-bottom bg-white">
+    {% include "pagination.html" with pages=page_obj %}
+  </div>
+{% endblock %}

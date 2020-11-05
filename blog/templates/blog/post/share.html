@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+  Share a post
+{% endblock %}
+
+{% block content %}
+  {% if sent %}
+    <h1>E-mail Successfully sent</h1>
+    <p>"{{ post.title }}" was Successfully sent to {{ sent }}.</p>
+  {% else %}
+    <h1>Share "{{ post.title }}" by email</h1>
+    <form action="." method="post">
+      {% csrf_token %}
+      <input type="text" name="name" placeholder="Enter Your Name *" required>
+      <input type="email" name="from" value="From Mail Id *" required>
+      <input type="email" name="to" value="To Mail Id *" required>
+      <textarea name="comments" rows="8" cols="80" placeholder="Enter your comment "></textarea>
+      <input type="submit" value="Send e-mail">
+    </form>
+  {% endif %}
+{% endblock%}

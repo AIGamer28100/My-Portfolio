@@ -1,0 +1,20 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+  New Post
+{% endblock %}
+
+{% block content %}
+  <form action="." method="post">
+    {% csrf_token %}
+    <div class="form-group row">
+      <label for="title" class="col-sm-2 h4">Title</label>
+      <input class="form-control col-sm-8" id="title" type="text" name="title" placeholder="Enter the Title *" required>
+    </div>
+    <div class="form-group row">
+      <label for="content" class="col-sm-2 h4">Body</label>
+      <textarea class="form-control col-sm-8" id="content" name="body" rows="8" cols="80" placeholder="Enter body content here *" required></textarea>
+    </div>
+    <input class="btn btn-primary" type="submit" value="Add new Psot">
+  </form>
+{% endblock %}
