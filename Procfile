@@ -1,1 +1,1 @@
-web: python manage.py runserver 0:28560
+web: gunicorn aigamer-blog.herokuapp.com.wsgi --log-file -
