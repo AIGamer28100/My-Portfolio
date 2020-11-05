@@ -1,5 +1,1 @@
 Django
-django-allauth
-django-livereload-server
-django-livesync
-dlib
