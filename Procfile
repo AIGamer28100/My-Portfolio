@@ -1,1 +1,1 @@
-web: gunicorn aigamer-blog.herokuapp.com.wsgi --log-file -
+web: gunicorn aigamer-blog.wsgi --log-file -
