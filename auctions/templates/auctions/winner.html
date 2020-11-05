@@ -1,0 +1,16 @@
+{% extends "auctions/Items.html" %}
+
+{% block foot %}
+  <!-- {% if winner.id == user.id %} -->
+    <!-- {% endif %} -->
+  <div class="winnerimg">
+    <img src="./static/winner.gif" height="98%" width="98%" style="position:fixed;z-index:5;">
+    <img src="https://i.gifer.com/54vL.gif" height="98%" width="98%" style="position:fixed;z-index:4;">
+  </div>
+  <!-- <br>
+  {% for i in bids %}
+    {{ i.bid }} , {{ i.bidder }} <br>
+  {% endfor %}
+  <br><br>
+  The Winner is {{ winner }} -->
+{% endblock %}

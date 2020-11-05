@@ -1,0 +1,18 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+  New Page
+{% endblock %}
+
+{% block body %}
+  <h1>{{ x }} Page Already Exist</h1><br>
+  <h5>
+    <a href='javascript:history.go(-1)'>
+      Try changing the title
+    </a>
+    Or
+    <a href='/wiki/{{ x }}/edit'>
+      edit {{ x }} Contents.
+    </a>
+  </h5>
+{% endblock %}

@@ -1,0 +1,55 @@
+ {% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="/static/encyclopedia/styles.css?{% now 'U' %}" rel="stylesheet">
+        <link rel="icon" href="https://www.wikipedia.org/static/favicon/wikipedia.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    </head>
+    <body>
+
+<!-- Navigtion Menu Start -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <img class="disabled ml-3" src="https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1200px-Wikipedia-logo-v2.svg.png" alt="LOGO" height="40px">
+        <a class="navbar-brand h1 ml-5">
+          {{ name }}
+        </a>
+        <div class="navbar-collapse h5">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link {{ H }}" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ CNP }}" href="{% url 'new' %}">Create New Page</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ RP }}" href="/random">Random Page</a>
+            </li>
+            {% if pa %}
+              <li class="nav-item">
+                <a class="nav-link {{ EP }}" href="/wiki/{{ name }}/edit">Edit Page</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+        <form class="form-inline" action="{% url 'index' %}" method="post">
+            {% csrf_token %}
+            <input class="form-control mr-sm-3" type="search" name="search" placeholder="Search" required>
+            <button class="btn btn-outline-primary mr-sm-5" type="submit">Search</button>
+        </form>
+      </nav>
+<!-- Navigtion Menu End -->
+
+<!-- Body Block Start -->
+      <div class="blockquote" id="bodyblock">
+        {% block body %}
+        {% endblock %}
+      </div>
+<!-- Body Block End -->
+
+    </body>
+</html>

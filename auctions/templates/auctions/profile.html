@@ -1,0 +1,152 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  <div class="card border-light" style="padding-bottom:200px;">
+    <img class="card-image" src="https://source.unsplash.com/random/800x250" alt="Banner" height="250px">
+    <div class="card-img-overlay w-50 mx-auto text-center" style="padding-top:175px;">
+      <div class="container">
+        <div class="d-flex justify-content-center h-100">
+          <div class="image_outer_container">
+            <div class="green_icon"></div>
+              <div class="image_inner_container">
+                <img class="rounded-circle" src="{{ Profile.dp }}" alt="Profile Picture" width="100px" height="100px">
+              </div>
+            </div>
+          </div>
+        </div>
+      <p class="h3 text-capitalize">
+        {{ Profile.first_name }} {{ Profile.last_name }}
+      </p>
+      <span class="text-muted">Email Id: </span>{{ Profile.email }}
+      {% if user.id == Profile.id %}
+          <form action="{% url 'Profileedit' user.id %}" method="post">
+              {% csrf_token %}
+              <h1>
+                <button class="btn btn-lg" type="submit" name="edit" value="edit">
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                  </svg>
+                </button>
+              </h1>
+          </form>
+      {% endif %}
+    </div>
+  </div>
+
+  <br>
+  <hr>
+  <br>
+  <h2>Listings</h2>
+  <hr>
+  {% for List in UserListing %}
+    <div class="media position-relative">
+      <div class="mr-5" style="width:30%">
+        <img class="s-image" src="{{ List.image }}" alt="{{ List.title }}" style="height:130px;">
+      </div>
+      <div class="media-body">
+        <h3 class="mt-0">{{ List.title }} {% if List.discription %} |  {{ List.discription }} {% endif %}</h3>
+        <h5 style="font-weight: normal"><pre><b>Price:</b> ${{ List.bid }}.00</pre></h5>
+        <a class="btn btn-primary stretched-link" href="{% url 'Item' List.title List.id %}" style="width:15%;padding:1%">View Listing</a>
+      </div>
+      {% if user.is_authenticated %}
+        <div class="options">
+          {% if List.title in Active %}
+            <form action="{% url 'removewishlist' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="List_id" value="{{ List.id }}">
+              <input type="hidden" name="page" value="profile">
+              <button class="btn bg-light" type="submit" name="button" value="button">
+                Watchlist
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M3 3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12l-5-3-5 3V3z"/>
+                </svg>
+              </button>
+            </form>
+          {% else %}
+            <form action="{% url 'addwishlist' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="List_id" value="{{ List.id }}">
+              <input type="hidden" name="page" value="profile">
+              <button class="btn bg-light" type="submit" name="button" value="button">
+                Watchlist
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z"/>
+                  <path fill-rule="evenodd" d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+                </svg>
+              </button>
+            </form>
+          {% endif %}<br>
+          {% if Profile.id == user.id %}
+            <form action="{% url 'editlist' List.title %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="">
+              <input type="hidden" name="List_id" value="{{ List.id }}">
+              <input type="hidden" name="page" value="index">
+              <button class="btn btn-primary" type="submit" name="button" value="button">Edit Listing</button>
+            </form>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+    <br><hr>
+  {% empty %}
+    <h1 align="center">Sorry, No Items Available &#128077; !!</h1>
+  {% endfor %}
+  <br><br><br><br>
+  {% if user.id == Profile.id %}
+      <h2>Wishlist <span class="badge badge-secondary">{{ Wish }}</span></h2>
+      <hr>
+      {% for List in Wishlist %}
+        <div class="media position-relative">
+          <div class="mr-5" style="width:30%">
+            <img class="s-image" src="{{ List.image }}" alt="{{ List.title }}" style="height:130px;">
+          </div>
+          <div class="media-body">
+            <h3 class="mt-0">{{ List.title }} {% if List.discription %} |  {{ List.discription }} {% endif %}</h3>
+            <h5 style="font-weight: normal"><pre><b>Price:</b> ${{ List.bid }}.00</pre></h5>
+            {% if List.active %}
+              <h4><b>Active Bidding !</b></h4>
+              <a class="btn btn-primary stretched-link" href="{% url 'Item' List.title List.id %}" style="width:15%;padding:1%">Bid</a>
+            {% else %}
+              <h6 style="font-weight: normal">Not Active Bidding</h6>
+              <a class="btn btn-primary stretched-link" href="{% url 'Item' List.title List.id %}" style="width:15%;padding:1%">View Listing</a>
+            {% endif %}
+          </div>
+        </div>
+        {% if user.is_authenticated %}
+          <div class="options">
+            {% if List.title in Active %}
+              <form action="{% url 'removewishlist' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="List_id" value="{{ List.id }}">
+                <input type="hidden" name="page" value="profile">
+                <button type="submit" name="button" value="button">
+                  Watchlist
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M3 3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12l-5-3-5 3V3z"/>
+                  </svg>
+                </button>
+              </form>
+            {% else %}
+              <form action="{% url 'addwishlist' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="List_id" value="{{ List.id }}">
+                <input type="hidden" name="page" value="profile">
+                <button type="submit" name="button" value="button">
+                  Watchlist
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z"/>
+                    <path fill-rule="evenodd" d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+                  </svg>
+                </button>
+              </form>
+            {% endif %}
+          </div>
+        {% endif %}
+        <br><hr>
+      {% empty %}
+        <h1 align="center">Sorry, No Items Available &#128077; !!</h1>
+      {% endfor %}
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+  {% if pa %}
+    {{ name }}
+  {% else %}
+    Encyclopedia
+  {% endif %}
+{% endblock %}
+
+{% block body %}
+    <h1> {{ title |safe }} </h1>
+    <hr>
+    {% if pa %}
+      {{ page |safe }}
+    {% else %}
+      <ul class="nav flex-column">
+          {% for entry in entries %}
+              <li class="nav-item m-1">
+                <a href="wiki/{{ entry }}">{{ entry }}</a>
+              </li>
+          {% endfor %}
+      </ul>
+    {% endif %}
+{% endblock %}

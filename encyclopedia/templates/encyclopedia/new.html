@@ -1,0 +1,28 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    New Page
+{% endblock %}
+
+{% block body %}
+    {% if pa %}
+      {{ page |safe }}
+    {% else %}
+      <form class="form" action="{% url 'new' %}" method="post">
+          {% csrf_token %}
+          <br>
+          <div class="form-group" novalidate>
+            <label class="h3" for="Title">Title</label>
+            <input class="form-control col-sm-10" type="text" name="Title" value="{{ title }}" id="Title" required>
+          </div>
+          <br>
+          <div class="form-group">
+            <label class="h3" for="Content">Content</label>
+            <textarea class="form-control col-sm-10" rows="10" name="Content"  id="Content" placeholder="Type content in MarkDown Format" required>{{ content }}</textarea>
+          </div>
+          <div class="form-group">
+            <input class="btn btn-primary" type="submit">
+          </div>
+      </form>
+    {% endif %}
+{% endblock %}

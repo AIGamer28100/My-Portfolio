@@ -1,0 +1,122 @@
+{% extends "auctions/layout.html" %}
+
+{% block navcl %}active{% endblock %}
+
+{% block body %}
+  <form class="form needs-validation" action="{% url 'createlisting' %}" method="post" id="addc" validate>
+    {% csrf_token %}
+  </form>
+  <div class="media position-relative">
+
+<!-- Image Section Starts -->
+    <div class="mr-5 container" style="max-width:15%">
+      <img class="img-fluid align-self-center" src="{{ request.Image| default:'https://www.dia.org/sites/default/files/No_Img_Avail.jpg' }}" alt="" style="max-height:200px:max-width:80%">
+    </div>
+<!-- Image Section Ends -->
+
+<!-- Body Section Starts -->
+    <div class="media-body">
+      <form class="form needs-validation" action="{% url 'createlisting' %}" method="post" id="all" validate >
+        {% csrf_token %}
+)
+        <!-- Title Starts -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="LT"><b>Title </b></label>
+          <div class="col-sm-8">
+            <input class="form-control" id="LT" type="text" name="Title" value="{{ request.title }}" placeholder="Title" required>
+          </div>
+        </div>
+        <!-- Title Ends -->
+
+        <!-- Discription Starts -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="LD"><b>Discription </b></label>
+          <div class="col-sm-8">
+            <input class="form-control" id="LD" type="text" name="Discription" value="{{ request.discription }}" placeholder="Discription">
+          </div>
+        </div>
+        <!-- Discription Ends -->
+
+        <!-- Image URL Starts -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="LI"><b>Image URL </b></label>
+          <div class="col-sm-8">
+            <input class="form-control" id="LI" type="URL" name="Image" value="{{ request.image }}" placeholder="Image URL" aria-describedby="imageHelp">
+            <small id="imageHelp" class="form-text text-muted"><b>Image URL </b>(Help : Upload Photo to drive and get shareable link and set permission to all )</small>
+          </div>
+        </div>
+        <!-- Image URL Ends -->
+        <br>
+        <!-- Status Starts -->
+        <div class="form-check">
+          <input class="form-check-input readonly" id="LA" name="Active" type="checkbox" placeholder="Image" checked disabled>
+          <label class="form-check-label" for="LI">
+            <b>Listing Status</b>
+            <small class="text-muted">  Listing will be set Active as Default. To deactive Listing edit it after creating. </small>
+          </label>
+        </div>
+        <!-- Status Ends -->
+        <br>
+        <!-- Bid Starts -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="LP"><b>Price: </b></label>
+          <div class="col-sm-8">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> &#8377 </span>
+              </div>
+              <input class="form-control" id="LP" type="number" name="Bid" value="{{ request.bid }}" placeholder="Starting Bid Value">
+              <div class="input-group-append">
+                <span class="input-group-text"> .00 </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Bid Ends -->
+        <br>
+        <!-- Category Starts -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="LC"><b>Category(s)</b></label>
+          <div class="col-sm-8">
+            <!-- Initial Cats Starts -->
+            <select class="form-control" id="LC" aria-describedby="catHelp" name="Categories" required multiple>
+              {% for i in Cat %}
+                <option value="{{ i.id }}">{{ i.category }}</option>
+              {% endfor %}
+            </select>
+            <!-- Initial Cats Ends -->
+            <br>
+            <!-- New Cat Starts -->
+            <div>
+              <div class="form-group">
+                <div class="input-group md-3">
+                  <input type="text" name="newcat" class="form-control {% if cx %} is-invalid {% else %} validate {% endif %}" placeholder="Add new Category" aria-describedby="addcat" form="addc" required>
+                  <div class="input-group-append">
+                    <button type="submit" name="action" value="addcat" class="input-group-text btn btn-light" id="addcat" form="addc" style="border-top-right-radius: 12%;border-bottom-right-radius: 12%">
+                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+                        <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="invalid-feedback ">
+                        {{ x }}
+                  </div>
+                  <div class="valid-feedback ">
+                        {{ x }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- New Cat Ends -->
+            <small id="catHelp" class="form-text text-muted">Hold down <b>“Control”</b>, or <b>“Command”</b> on a Mac, to select more than one.</small>
+          </div>
+        </div>
+        <!-- Category Ends -->
+        <br>
+        <pre>Listing by <span class="btn btn-sm disabled text-capitalize"><b>{{ user.username }}</b></span></pre>
+        <button type="submit" name="action" value="submit" class="btn btn-primary" form="all">Submit</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

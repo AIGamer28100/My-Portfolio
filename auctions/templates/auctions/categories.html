@@ -1,0 +1,63 @@
+{% extends "auctions/layout.html" %}
+{% block navcat %}active{% endblock %}
+{% block body %}
+  {% for Category in Categories %}
+    <a class="btn btn-outline-dark" href="{% url 'CategoryListing' Category.id %}" style="margin-right:1%">{{ Category.category }}</a>
+  {% empty %}
+    <h2>{{ Cat }}</h2>
+    <hr><br>
+    {% for List in CategoriesListing %}
+    <div class="media position-relative">
+      <div class="mr-5 container" style="max-width:15%">
+        <img class="img-fluid align-self-center" src="{{ List.image }}" alt="{{ List.title }}" style="max-height:200px:max-width:80%">
+      </div>
+      <div class="media-body">
+          <h3 class="mt-0" style="font-size-adjust: auto;">{{ List.title }}  {% if List.discription %} |  {{ List.discription }} {% endif %}</h3>
+          <h5 style="font-weight: normal"><pre><b>Price:</b> {{ List.bid }}.00 &#8377</pre></h5>
+          {% if List.active %}
+            <h4><b>Active Bidding !</b></h4>
+            <a class="btn btn-primary stretched-link" href="{% url 'Item' List.title List.id %}" style="width:15%;padding:1%">Bid</a>
+          {% else %}
+            <h6 style="font-weight: normal">Not Active Bidding</h6>
+            <a class="btn btn-primary stretched-link" href="{% url 'Item' List.title List.id %}" style="width:15%;padding:1%">View</a>
+          {% endif %}
+      </div>
+      {% if user.is_authenticated %}
+        <div class="options">
+          {% if List.title in Active %}
+            <form action="{% url 'removewishlist' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="List_id" value="{{ List.id }}">
+              <input type="hidden" name="page" value="cat">
+              <input type="hidden" name="Cat_Id" value="{{ Cat_Id }}">
+              <button type="submit" name="button" value="button">
+                Watchlist
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M3 3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12l-5-3-5 3V3z"/>
+                </svg>
+              </button>
+            </form>
+          {% else %}
+            <form action="{% url 'addwishlist' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="List_id" value="{{ List.id }}">
+              <input type="hidden" name="page" value="cat">
+              <input type="hidden" name="Cat_Id" value="{{ Cat_Id }}">
+              <button type="submit" name="button" value="button">
+                Watchlist
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z"/>
+                  <path fill-rule="evenodd" d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+                </svg>
+              </button>
+            </form>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+    <br><hr>
+    {% empty %}
+        <h1 align="center">Sorry, No Items Available &#128077; !!</h1>
+    {% endfor %}
+  {% endfor %}
+{% endblock %}

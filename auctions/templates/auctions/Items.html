@@ -1,0 +1,223 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<!-- Listing Section -->
+  <div>
+    <div class="media position-relative">
+      <div class="mr-5 container" style="max-width:15%">
+        <img class="img-fluid align-self-center" src="{{ List.image }}" alt="{{ List.title }}" style="max-height:200px:max-width:80%">
+      </div>
+      <div class="media-body">
+        <h3 class="mt-0">{{ List.title }}</h3>
+        <h3 class="mt-1">{{ List.discription }}</h3>
+        <h5 style="font-weight: normal"><pre><b>Price:</b> {{ List.bid }}.00 &#8377</pre></h5>
+          <pre class="text-capitalize">Listed by <a href="{% url 'Profile' List.user.id %}"><b>{{ List.user.username }}</b></a></pre>
+          <small class="text-muted">Created on {{ List.created }}</small>
+      </div>
+      {% if user.is_authenticated %}
+        <div class="options">
+          {% if List.title in Active %}
+            <form action="{% url 'removewishlist' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="List_id" value="{{ List.id }}">
+              <input type="hidden" name="page" value="item">
+              <button type="submit" name="button" value="button">
+                Remove Watchlist
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M3 3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12l-5-3-5 3V3z"/>
+                </svg>
+              </button>
+            </form>
+          {% else %}
+            <form action="{% url 'addwishlist' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="List_id" value="{{ List.id }}">
+              <input type="hidden" name="page" value="item">
+              <button type="submit" name="button" value="button">
+                Add Watchlist
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z"/>
+                  <path fill-rule="evenodd" d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+                </svg>
+              </button>
+            </form>
+          {% endif %}
+          <br>
+          {% if List.user.id == user.id %}
+            <form action="{% url 'editlist' List.title %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="">
+              <input type="hidden" name="List_id" value="{{ List.id }}">
+              <input type="hidden" name="page" value="index">
+              <button class="btn btn-primary" type="submit" name="button" value="button">Edit Listing</button>
+            </form>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+    <br><br>
+    {% if user.id == List.user.id %}
+      {% if List.active %}
+        <form class="form disabled" action="" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <small id="emailHelp disabled" class="form-text text-muted">{{ count|add:-1 }} bid(s) so far.Your bid is current bid</small>
+            <input type="number" name="Bidding" value="none" placeholder="Bid" min="{{ List.bid|add:1 }}" aria-describedby="emailHelp" id="Bid" class="form-control disabled" readonly required>
+          </div>
+          <input class="btn btn-primary disabled" type="button" name="submit" value="Place Bid">
+        </form>
+      {% else %}
+        {% if winner %}
+          <h3 class="btn btn-success" style="font-weight: normal">
+            <a href="{% url 'Profile' winner.id %}" style="z-index:3;color:white;"><b>{{ winner }}</b></a> is the Winner for this Listing..
+          </h3>
+          <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="submit" value="transferownership">
+            <input type="hidden" name="TOto" value="{{ winner.id }}">
+            <button class="btn btn-info h3" style="font-weight: normal">
+              Transfer Ownership to {{ winner }}
+            </button>
+          </form>
+        {% else %}
+          <h3 class="btn btn-secondary" style="font-weight: normal">
+            Listing Not Bidding
+          </h3>
+        {% endif %}
+      {% endif %}
+    {% else %}
+      {% if List.active %}
+        <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <small id="emailHelp" class="form-text text-muted">{{ count|add:-1 }} bid(s) so far.Your bid is current bid</small>
+            <input type="number" name="Bidding" value="none" placeholder="Bid" min="{{ List.bid|add:1 }}" aria-describedby="emailHelp" id="Bid" class="form-control" required>
+          </div>
+          <input class="btn btn-primary" type="submit" name="submit" value="Place Bid">
+        </form>
+      {% else %}
+        {% if winner %}
+          {% if winner.id == user.id %}
+            <h3 class="btn btn-success" style="font-weight: normal">
+              <a href="{% url 'Profile' winner.id %}" style="z-index:3;color:white;"><b>{{ winner }}</b></a> is the Winner for this Listing..
+            </h3>
+          {% else %}
+            <h3 class="btn btn-danger" style="font-weight: normal">
+              <a href="{% url 'Profile' winner.id %}" style="z-index:3;color:white;"><b>{{ winner }}</b></a> is the Winner for this Listing..
+            </h3>
+          {% endif %}
+        {% else %}
+          <h3 class="btn btn-secondary" style="font-weight: normal">
+            Listing Not Bidding
+          </h3>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  <br><br><br>
+  </div>
+<!-- Comment Section -->
+  <div>
+    <pre class="h3 d-flex justify-content-between">
+        <span>Comments.</span>
+        <span class="muted-text badge badge-dark badge-pills">
+          {{ commentcount|default:0 }}
+        </span>
+    </pre>
+    <hr>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <div class="input-group md-3">
+              <textarea class="form-control" type="text" name="comment" placeholder="Your Comment" aria-describedby="comment" required>{{ replyto }}</textarea>
+              <div class="input-group-append">
+                <input class="btn btn-primary" id="comment" type="submit" name="submit" value="ADDCOMMENT">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="pathid" value="{{ List.id }}">
+          <input type="hidden" name="pathtitle" value="{{ List.title }}">
+        </form>
+      </li>
+      {% for i in comments %}
+          <li class="list-group-item align-items-center">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">
+                <a class="list-group-item-action text-capitalize" href="{% url 'Profile' i.user.pk %}">
+                  {{ i.user.username }}
+                </a>
+              </h5>
+              <small>{{ i.created }}</small>
+            </div>
+            {% if i.user.id == user.id %}
+              <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+                {% csrf_token %}
+                {% if "div class" in i.comment %}
+                {% else %}
+                  <div class="options">
+                    <input type="hidden" name="commentid" value="{{ i.id }}">
+                    <button type="submit" name="submit" value="del" class="btn btn-light">
+                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                      </svg>
+                    </button>
+                  </div>
+                {% endif %}
+              </form>
+            {% else %}
+              {% if user.id == List.user.id %}
+                <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+                  {% csrf_token %}
+                  {% if "div class" in i.comment %}
+                  {% else %}
+                    <div class="options">
+                      <input type="hidden" name="commentid" value="{{ i.id }}">
+                      <button type="submit" name="submit" value="del" class="btn btn-light">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                        </svg>
+                      </button>
+                    </div>
+                  {% endif %}
+                </form>
+                <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+                  {% csrf_token %}
+                  {% if 'div class' in i.comment %}
+                  {% else %}
+                    <div class="options">
+                      <input type="hidden" name="commentby" value="{{ i.user.id }}">
+                      <input type="hidden" name="commentid" value="{{ i.id }}">
+                      <button type="submit" id="replybtn" name="submit" value="reply" class="btn btn-light">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-reply-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9.079 11.9l4.568-3.281a.719.719 0 0 0 0-1.238L9.079 4.1A.716.716 0 0 0 8 4.719V6c-1.5 0-6 0-7 8 2.5-4.5 7-4 7-4v1.281c0 .56.606.898 1.079.62z"/>
+                        </svg>
+                      </button>
+                    </div>
+                  {% endif %}
+                </form>
+              {% else %}
+                <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+                  {% csrf_token %}
+                  {% if 'div class' in i.comment %}
+                  {% else %}
+                    <div class="options">
+                      <input type="hidden" name="commentby" value="{{ i.user.id }}">
+                      <input type="hidden" name="commentid" value="{{ i.id }}">
+                      <button type="submit" name="submit" value="reply" class="btn btn-light">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-reply-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9.079 11.9l4.568-3.281a.719.719 0 0 0 0-1.238L9.079 4.1A.716.716 0 0 0 8 4.719V6c-1.5 0-6 0-7 8 2.5-4.5 7-4 7-4v1.281c0 .56.606.898 1.079.62z"/>
+                        </svg>
+                      </button>
+                    </div>
+                  {% endif %}
+                </form>
+              {% endif %}
+            {% endif %}
+            <pre>{{ i.comment| safe }}</pre>
+          </li>
+      {% empty %}
+        <pre class="h2 list-group-item list-group-item-secondary">No Comments</pre>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

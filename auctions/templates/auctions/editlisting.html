@@ -1,0 +1,163 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  {% if user.id == List.user.id %}
+    <form class="options" action="{% url 'editlist' List.title %}" method="post" id="delete">
+      {% csrf_token %}
+    </form>
+    <form class="form needs-validation" action="{% url 'editlist' List.title %}" method="post" id="addc" validate>{% csrf_token %}</form>
+    <div class="media position-relative">
+      <div class="mr-5 container" style="max-width:15%">
+        <img class="img-fluid align-self-center" src="{{ request.Image| default:List.image }}" alt="{{ List.title }}" style="max-height:200px:max-width:80%">
+      </div>
+      <div class="media-body">
+        <form class="form needs-validation" action="{% url 'editlist' List.title %}" method="post" id="all" validate >
+          {% csrf_token %}
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="LT"><b>Title </b></label>
+            <div class="col-sm-8">
+              <input class="form-control" id="LT" type="text" name="Title" value="{{ List.title }}" placeholder="Title" required>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="LD"><b>Discription </b></label>
+            <div class="col-sm-8">
+              <input class="form-control" id="LD" type="text" name="Discription" value="{{ List.discription }}" placeholder="Discription">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="LI"><b>Image URL </b></label>
+            <div class="col-sm-8">
+              <input class="form-control" id="LI" type="URL" name="Image" value="{{ List.image }}" placeholder="Image URL" aria-describedby="imageHelp">
+              <small id="imageHelp" class="form-text text-muted"><b>Image URL </b>(Help : Upload Photo to drive and get shareable link and set permission to all )</small>
+            </div>
+          </div><br>
+          {% if List.active %}
+            <div class="form-check">
+              <input class="form-check-input" id="LA" name="Active" type="checkbox" placeholder="Image" checked>
+              <label class="form-check-label" for="LI"><b>Listing Status</b></label>
+            </div><br>
+          {% else %}
+            <div class="form-check">
+              <input class="form-check-input" id="LA" name="Active" type="checkbox" placeholder="Image">
+              <label class="form-check-label" for="LI"><b>Listing Status </b></label>
+            </div><br>
+          {% endif %}
+          {% if count > 0 %}
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label" for="LP"><b>Price: </b></label>
+              <div class="col-sm-8">
+                <div class="input-group" aria-describedby="bidHelp">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> &#8377 </span>
+                  </div>
+                  <input class="form-control" id="LP" type="number" name="Bid" value="{{ List.bid }}" placeholder="Starting Bid Value" disabled>
+                  <div class="input-group-append">
+                    <span class="input-group-text"> .00 </span>
+                  </div>
+                </div>
+                <small id="bidHelp" class="text-muted">Cannot change Bid Price ( Bidding Started )</small>
+              </div>
+            </div>
+          {% else %}
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label" for="LP"><b>Price: </b></label>
+              <div class="col-sm-8">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> &#8377 </span>
+                  </div>
+                  <input class="form-control" id="LP" type="number" name="Bid" value="{{ List.bid }}" placeholder="Starting Bid Value">
+                  <div class="input-group-append">
+                    <span class="input-group-text"> .00 </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          <br>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="LC"><b>Category(s)</b></label>
+            <div class="col-sm-8">
+              <select class="form-control" id="LC" aria-describedby="catHelp" name="Categories" required multiple>
+                {% for i in Cat %}
+                  <option value="{{ i.id }}">{{ i.category }}</option>
+                {% endfor %}
+              </select>
+              <br>
+              <div>
+                <div class="form-group">
+                  <div class="input-group md-3">
+                    <input type="text" name="newcat" class="form-control {% if cx %} is-invalid {% else %} validate {% endif %}" placeholder="Add new Category" aria-describedby="addcat" form="addc" required>
+                    <div class="input-group-append">
+                      <button type="submit" name="action" value="addcat" class="input-group-text btn btn-light" id="addcat" form="addc" style="border-top-right-radius: 12%;border-bottom-right-radius: 12%">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+                          <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+                        </svg>
+                      </button>
+                    </div>
+                    <div class="invalid-feedback ">
+                          {{ x }}
+                    </div>
+                    <div class="valid-feedback ">
+                          {{ x }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <small id="catHelp" class="form-text text-muted">Hold down <b>“Control”</b>, or <b>“Command”</b> on a Mac, to select more than one.</small>
+            </div>
+          </div>
+          <br>
+          <pre>Listing by <span class="btn btn-sm disabled text-capitalize"><b>{{ List.user.username }}</b></span></pre>
+          <small class="text-muted">Created on {{ List.created }}</small><br><br>
+          <button type="submit" name="action" value="submit" class="btn btn-primary" form="all">Submit</button>
+          {% if List.active %}
+          {% else %}
+            <button class="btn btn-danger options" type="submit" name="action" value="delete" form="delete">Delete</button>
+            <br>
+          {% endif %}
+        </form>
+      </div>
+      {% if user.is_authenticated %}
+        <div class="options">
+          {% if List.title in Active %}
+            <form action="{% url 'removewishlist' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="List_id" value="{{ List.id }}">
+              <input type="hidden" name="page" value="item">
+              <button type="submit" name="button" value="button">
+                Remove Watchlist
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M3 3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12l-5-3-5 3V3z"/>
+                </svg>
+              </button>
+            </form>
+          {% else %}
+            <form action="{% url 'addwishlist' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="List_id" value="{{ List.id }}">
+              <input type="hidden" name="page" value="item">
+              <button type="submit" name="button" value="button">
+                Add Watchlist
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z"/>
+                  <path fill-rule="evenodd" d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+                </svg>
+              </button>
+            </form>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  {% else %}
+  <div class="">
+    <div class=" display-2 text-center">
+      <img src="https://freefrontend.com/assets/img/403-forbidden-html-templates/403-Forbidden.gif" alt="">
+      <div class="display-4 text-center"> You will be Redirected in few Seconds</div>
+    </div>
+  </div>
+  <!-- <meta http-equiv="refresh" content="3;url = {% url 'Item' List.title List.id %}"> -->
+  {% endif %}
+{% endblock %}
