@@ -10,13 +10,13 @@
         <h3 class="mt-0">{{ List.title }}</h3>
         <h3 class="mt-1">{{ List.discription }}</h3>
         <h5 style="font-weight: normal"><pre><b>Price:</b> {{ List.bid }}.00 &#8377</pre></h5>
-          <pre class="text-capitalize">Listed by <a href="{% url 'Profile' List.user.id %}"><b>{{ List.user.username }}</b></a></pre>
+          <pre class="text-capitalize">Listed by <a href="{% url 'auctions:Profile' List.user.id %}"><b>{{ List.user.username }}</b></a></pre>
           <small class="text-muted">Created on {{ List.created }}</small>
       </div>
       {% if user.is_authenticated %}
         <div class="options">
           {% if List.title in Active %}
-            <form action="{% url 'removewishlist' %}" method="post">
+            <form action="{% url 'auctions:removewishlist' %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="List_id" value="{{ List.id }}">
               <input type="hidden" name="page" value="item">
@@ -28,7 +28,7 @@
               </button>
             </form>
           {% else %}
-            <form action="{% url 'addwishlist' %}" method="post">
+            <form action="{% url 'auctions:addwishlist' %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="List_id" value="{{ List.id }}">
               <input type="hidden" name="page" value="item">
@@ -43,7 +43,7 @@
           {% endif %}
           <br>
           {% if List.user.id == user.id %}
-            <form action="{% url 'editlist' List.title %}" method="post">
+            <form action="{% url 'auctions:editlist' List.title %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="action" value="">
               <input type="hidden" name="List_id" value="{{ List.id }}">
@@ -68,9 +68,9 @@
       {% else %}
         {% if winner %}
           <h3 class="btn btn-success" style="font-weight: normal">
-            <a href="{% url 'Profile' winner.id %}" style="z-index:3;color:white;"><b>{{ winner }}</b></a> is the Winner for this Listing..
+            <a href="{% url 'auctions:Profile' winner.id %}" style="z-index:3;color:white;"><b>{{ winner }}</b></a> is the Winner for this Listing..
           </h3>
-          <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+          <form class="form" action="{% url 'auctions:Item' List.title List.id %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="submit" value="transferownership">
             <input type="hidden" name="TOto" value="{{ winner.id }}">
@@ -86,7 +86,7 @@
       {% endif %}
     {% else %}
       {% if List.active %}
-        <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+        <form class="form" action="{% url 'auctions:Item' List.title List.id %}" method="post">
           {% csrf_token %}
           <div class="form-group">
             <small id="emailHelp" class="form-text text-muted">{{ count|add:-1 }} bid(s) so far.Your bid is current bid</small>
@@ -98,11 +98,11 @@
         {% if winner %}
           {% if winner.id == user.id %}
             <h3 class="btn btn-success" style="font-weight: normal">
-              <a href="{% url 'Profile' winner.id %}" style="z-index:3;color:white;"><b>{{ winner }}</b></a> is the Winner for this Listing..
+              <a href="{% url 'auctions:Profile' winner.id %}" style="z-index:3;color:white;"><b>{{ winner }}</b></a> is the Winner for this Listing..
             </h3>
           {% else %}
             <h3 class="btn btn-danger" style="font-weight: normal">
-              <a href="{% url 'Profile' winner.id %}" style="z-index:3;color:white;"><b>{{ winner }}</b></a> is the Winner for this Listing..
+              <a href="{% url 'auctions:Profile' winner.id %}" style="z-index:3;color:white;"><b>{{ winner }}</b></a> is the Winner for this Listing..
             </h3>
           {% endif %}
         {% else %}
@@ -125,7 +125,7 @@
     <hr>
     <ul class="list-group">
       <li class="list-group-item">
-        <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+        <form class="form" action="{% url 'auctions:Item' List.title List.id %}" method="post">
           {% csrf_token %}
           <div class="form-group">
             <div class="input-group md-3">
@@ -143,14 +143,14 @@
           <li class="list-group-item align-items-center">
             <div class="d-flex w-100 justify-content-between">
               <h5 class="mb-1">
-                <a class="list-group-item-action text-capitalize" href="{% url 'Profile' i.user.pk %}">
+                <a class="list-group-item-action text-capitalize" href="{% url 'auctions:Profile' i.user.pk %}">
                   {{ i.user.username }}
                 </a>
               </h5>
               <small>{{ i.created }}</small>
             </div>
             {% if i.user.id == user.id %}
-              <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+              <form class="form" action="{% url 'auctions:Item' List.title List.id %}" method="post">
                 {% csrf_token %}
                 {% if "div class" in i.comment %}
                 {% else %}
@@ -166,7 +166,7 @@
               </form>
             {% else %}
               {% if user.id == List.user.id %}
-                <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+                <form class="form" action="{% url 'auctions:Item' List.title List.id %}" method="post">
                   {% csrf_token %}
                   {% if "div class" in i.comment %}
                   {% else %}
@@ -180,7 +180,7 @@
                     </div>
                   {% endif %}
                 </form>
-                <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+                <form class="form" action="{% url 'auctions:Item' List.title List.id %}" method="post">
                   {% csrf_token %}
                   {% if 'div class' in i.comment %}
                   {% else %}
@@ -196,7 +196,7 @@
                   {% endif %}
                 </form>
               {% else %}
-                <form class="form" action="{% url 'Item' List.title List.id %}" method="post">
+                <form class="form" action="{% url 'auctions:Item' List.title List.id %}" method="post">
                   {% csrf_token %}
                   {% if 'div class' in i.comment %}
                   {% else %}

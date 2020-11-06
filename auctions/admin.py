@@ -5,7 +5,7 @@ from django.contrib import admin
 from .models import *
 
 class UserAdmin(admin.ModelAdmin):
-    filter_horizontal = ("user_permissions",)
+    list_display = ("user",)
 
 class ListingAdmin(admin.ModelAdmin):
     list_display = ("title",)
@@ -17,7 +17,7 @@ class WishlistAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("category",)
 
-admin.site.register(User, UserAdmin)
+admin.site.register(UserProfile, UserAdmin)
 admin.site.register(Listing, ListingAdmin)
 admin.site.register(Bid)
 admin.site.register(Comment)

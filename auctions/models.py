@@ -1,8 +1,9 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 from django.db import models
 
 
-class User(AbstractUser):
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
     dp = models.URLField(max_length=1000, default="https://www.dia.org/sites/default/files/No_Img_Avail.jpg")
 
 class Category(models.Model):
@@ -34,7 +35,7 @@ class Bid(models.Model):
 
 class Comment(models.Model):
     item = models.ForeignKey(Listing, on_delete = models.CASCADE, blank = False, null = False, related_name = "Comment_on", default = None, )
-    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "User",  blank = False, default = None, )
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "Profile",  blank = False, default = None, )
     comment = models.CharField(max_length = 500, default = None, )
     created =  models.DateTimeField(auto_now=False, auto_now_add=True,)
 
@@ -42,7 +43,7 @@ class Comment(models.Model):
         return f"Comment on {self.item.title} by {self.user.username}"
 
 class Wishlist(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "User_Wishlist", )
+    user = models.OneToOneField(User, on_delete = models.CASCADE, related_name = "User_Wishlist", )
     wishlist = models.ManyToManyField(Listing, blank = True, related_name = "WishList")
 
     def __str__(self):

@@ -3,7 +3,7 @@
 {% block navcl %}active{% endblock %}
 
 {% block body %}
-  <form class="form needs-validation" action="{% url 'createlisting' %}" method="post" id="addc" validate>
+  <form class="form needs-validation" action="{% url 'auctions:createlisting' %}" method="post" id="addc" validate>
     {% csrf_token %}
   </form>
   <div class="media position-relative">
@@ -16,7 +16,7 @@
 
 <!-- Body Section Starts -->
     <div class="media-body">
-      <form class="form needs-validation" action="{% url 'createlisting' %}" method="post" id="all" validate >
+      <form class="form needs-validation" action="{% url 'auctions:createlisting' %}" method="post" id="all" validate >
         {% csrf_token %}
 )
         <!-- Title Starts -->

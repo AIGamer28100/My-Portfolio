@@ -9,7 +9,7 @@
           <div class="image_outer_container">
             <div class="green_icon"></div>
               <div class="image_inner_container">
-                <img class="rounded-circle" src="{{ Profile.dp }}" alt="Profile Picture" width="100px" height="100px">
+                <img class="rounded-circle" src="{{ P.dp }}" alt="Profile Picture" width="100px" height="100px">
               </div>
             </div>
           </div>
@@ -19,7 +19,7 @@
       </p>
       <span class="text-muted">Email Id: </span>{{ Profile.email }}
       {% if user.id == Profile.id %}
-          <form action="{% url 'Profileedit' user.id %}" method="post">
+          <form action="{% url 'auctions:Profileedit' user.id %}" method="post">
               {% csrf_token %}
               <h1>
                 <button class="btn btn-lg" type="submit" name="edit" value="edit">
@@ -47,12 +47,12 @@
       <div class="media-body">
         <h3 class="mt-0">{{ List.title }} {% if List.discription %} |  {{ List.discription }} {% endif %}</h3>
         <h5 style="font-weight: normal"><pre><b>Price:</b> ${{ List.bid }}.00</pre></h5>
-        <a class="btn btn-primary stretched-link" href="{% url 'Item' List.title List.id %}" style="width:15%;padding:1%">View Listing</a>
+        <a class="btn btn-primary stretched-link" href="{% url 'auctions:Item' List.title List.id %}" style="width:15%;padding:1%">View Listing</a>
       </div>
       {% if user.is_authenticated %}
         <div class="options">
           {% if List.title in Active %}
-            <form action="{% url 'removewishlist' %}" method="post">
+            <form action="{% url 'auctions:removewishlist' %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="List_id" value="{{ List.id }}">
               <input type="hidden" name="page" value="profile">
@@ -64,7 +64,7 @@
               </button>
             </form>
           {% else %}
-            <form action="{% url 'addwishlist' %}" method="post">
+            <form action="{% url 'auctions:addwishlist' %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="List_id" value="{{ List.id }}">
               <input type="hidden" name="page" value="profile">
@@ -78,7 +78,7 @@
             </form>
           {% endif %}<br>
           {% if Profile.id == user.id %}
-            <form action="{% url 'editlist' List.title %}" method="post">
+            <form action="{% url 'auctions:editlist' List.title %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="action" value="">
               <input type="hidden" name="List_id" value="{{ List.id }}">
@@ -107,17 +107,17 @@
             <h5 style="font-weight: normal"><pre><b>Price:</b> ${{ List.bid }}.00</pre></h5>
             {% if List.active %}
               <h4><b>Active Bidding !</b></h4>
-              <a class="btn btn-primary stretched-link" href="{% url 'Item' List.title List.id %}" style="width:15%;padding:1%">Bid</a>
+              <a class="btn btn-primary stretched-link" href="{% url 'auctions:Item' List.title List.id %}" style="width:15%;padding:1%">Bid</a>
             {% else %}
               <h6 style="font-weight: normal">Not Active Bidding</h6>
-              <a class="btn btn-primary stretched-link" href="{% url 'Item' List.title List.id %}" style="width:15%;padding:1%">View Listing</a>
+              <a class="btn btn-primary stretched-link" href="{% url 'auctions:Item' List.title List.id %}" style="width:15%;padding:1%">View Listing</a>
             {% endif %}
           </div>
         </div>
         {% if user.is_authenticated %}
           <div class="options">
             {% if List.title in Active %}
-              <form action="{% url 'removewishlist' %}" method="post">
+              <form action="{% url 'auctions:removewishlist' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="List_id" value="{{ List.id }}">
                 <input type="hidden" name="page" value="profile">
@@ -129,7 +129,7 @@
                 </button>
               </form>
             {% else %}
-              <form action="{% url 'addwishlist' %}" method="post">
+              <form action="{% url 'auctions:addwishlist' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="List_id" value="{{ List.id }}">
                 <input type="hidden" name="page" value="profile">

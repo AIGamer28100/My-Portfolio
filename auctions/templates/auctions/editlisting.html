@@ -2,16 +2,16 @@
 
 {% block body %}
   {% if user.id == List.user.id %}
-    <form class="options" action="{% url 'editlist' List.title %}" method="post" id="delete">
+    <form class="options" action="{% url 'auctions:editlist' List.title %}" method="post" id="delete">
       {% csrf_token %}
     </form>
-    <form class="form needs-validation" action="{% url 'editlist' List.title %}" method="post" id="addc" validate>{% csrf_token %}</form>
+    <form class="form needs-validation" action="{% url 'auctions:editlist' List.title %}" method="post" id="addc" validate>{% csrf_token %}</form>
     <div class="media position-relative">
       <div class="mr-5 container" style="max-width:15%">
         <img class="img-fluid align-self-center" src="{{ request.Image| default:List.image }}" alt="{{ List.title }}" style="max-height:200px:max-width:80%">
       </div>
       <div class="media-body">
-        <form class="form needs-validation" action="{% url 'editlist' List.title %}" method="post" id="all" validate >
+        <form class="form needs-validation" action="{% url 'auctions:editlist' List.title %}" method="post" id="all" validate >
           {% csrf_token %}
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="LT"><b>Title </b></label>
@@ -123,7 +123,7 @@
       {% if user.is_authenticated %}
         <div class="options">
           {% if List.title in Active %}
-            <form action="{% url 'removewishlist' %}" method="post">
+            <form action="{% url 'auctions:removewishlist' %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="List_id" value="{{ List.id }}">
               <input type="hidden" name="page" value="item">
@@ -135,7 +135,7 @@
               </button>
             </form>
           {% else %}
-            <form action="{% url 'addwishlist' %}" method="post">
+            <form action="{% url 'auctions:addwishlist' %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="List_id" value="{{ List.id }}">
               <input type="hidden" name="page" value="item">
@@ -158,6 +158,6 @@
       <div class="display-4 text-center"> You will be Redirected in few Seconds</div>
     </div>
   </div>
-  <!-- <meta http-equiv="refresh" content="3;url = {% url 'Item' List.title List.id %}"> -->
+  <!-- <meta http-equiv="refresh" content="3;url = {% url 'auctions:Item' List.title List.id %}"> -->
   {% endif %}
 {% endblock %}

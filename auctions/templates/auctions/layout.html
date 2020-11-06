@@ -23,14 +23,14 @@
     <body>
       <div class="bodynav">
         <nav class="navbar navbar-light">
-          <a class="navbar-brand" href="{% url 'index' %}">
+          <a class="navbar-brand" href="{% url 'auctions:index' %}">
             <img src="https://i.kisscc0.com/20190403/he/kisscc0-computer-icons-gavel-bidding-auction-art-mono-auction-5ca442e2505ba1.7977922815542688983292.png" width="45" height="45" class="d-inline-block align-top" alt="Auctions">
             <span class="h1">Auctions</span>
           </a>
         </nav>
         <div class="Profile">
             {% if user.is_authenticated %}
-                <a href="{% url 'Profile' user.id %}" style="text-decoration: None;color: black">
+                <a href="{% url 'auctions:Profile' user.id %}" style="text-decoration: None;color: black">
                   <h3 class="text-capitalize"><strong>{{ user.username }}</strong>.</h3>
                 </a>
             {% else %}
@@ -39,27 +39,27 @@
         </div>
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link {% block navindex %}{% endblock %}" href="{% url 'index' %}">Home</a>
+                <a class="nav-link {% block navindex %}{% endblock %}" href="{% url 'auctions:index' %}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% block navcat %}{% endblock %}" href="{% url 'Categories' %}">Categories</a>
+                <a class="nav-link {% block navcat %}{% endblock %}" href="{% url 'auctions:Categories' %}">Categories</a>
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link {% block navwish %}{% endblock %}" href="{% url 'Wishs' %}">WishList <span class="badge badge-{% block navwishl %}secondary{% endblock %}">{{ Wish }}</span></a>
+                    <a class="nav-link {% block navwish %}{% endblock %}" href="{% url 'auctions:Wishs' %}">WishList <span class="badge badge-{% block navwishl %}secondary{% endblock %}">{{ Wish }}</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% block navcl %}{% endblock %}" href="{% url 'createlisting' %}">Create Listing</a>
+                    <a class="nav-link {% block navcl %}{% endblock %}" href="{% url 'auctions:createlisting' %}">Create Listing</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% block navlo %}{% endblock %}" href="{% url 'logout' %}">Log Out</a>
+                    <a class="nav-link {% block navlo %}{% endblock %}" href="{% url 'auctions:logout' %}">Log Out</a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link {% block navli %}{% endblock %}" href="{% url 'login' %}">Log In</a>
+                    <a class="nav-link {% block navli %}{% endblock %}" href="{% url 'auctions:login' %}">Log In</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% block navreg %}{% endblock %}" href="{% url 'register' %}">Register</a>
+                    <a class="nav-link {% block navreg %}{% endblock %}" href="{% url 'auctions:register' %}">Register</a>
                 </li>
             {% endif %}
         </ul>

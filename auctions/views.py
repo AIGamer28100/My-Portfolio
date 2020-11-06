@@ -38,7 +38,7 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("auctions:index"))
         else:
             return render(request, "auctions/login.html", {
                 "message": "Invalid username and/or password."
@@ -49,7 +49,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("auctions:index"))
 
 
 def register(request):
@@ -71,12 +71,14 @@ def register(request):
             user.save()
             W = Wishlist(user=user)
             W.save()
+            P = Profile(user=user)
+            P.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {
                 "message": "Username already taken."
             })
         login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("auctions:index"))
     else:
         return render(request, "auctions/register.html")
 
@@ -112,6 +114,7 @@ def CategoryListing(request,CategoryList):
 
 
 def Profile(request,UserId):
+    P = UserProfile.objects.get(user=request.user)
     if request.user.is_authenticated:
         Wishlists = Wishlist.objects.get(user = request.user.id)
         Wishlists = Wishlists.wishlist.all()
@@ -120,6 +123,7 @@ def Profile(request,UserId):
     Active = [i.title for i in Wishlists]
     return render(request, "auctions/profile.html",{
         "Profile": User.objects.get(pk=UserId),
+        "P": P,
         "UserListing": Listing.objects.filter(user=UserId),
         "Wish": len(Wishlists),
         "Wishlist": Wishlists,
@@ -127,28 +131,32 @@ def Profile(request,UserId):
     })
 
 def editprofile(request,UserId):
+    P = UserProfile.objects.get(user=request.user)
     if request.method == "POST":
         if request.POST['edit'] == "submit":
             user = User.objects.get(pk=request.user.id)
+            P = UserProfile.objects.get(user=request.user)
             user.first_name = request.POST['First_name']
             user.last_name = request.POST['Last_name']
             user.email = request.POST['Email']
             dp = request.POST['dp']
             if len(dp)<1:
                 dp = "https://www.dia.org/sites/default/files/No_Img_Avail.jpg"
-            elif dp == user.dp:
+            elif dp == P.dp:
                 pass
             else:
                 if "https://drive.google.com/" in dp[:32]:
                     dp = dp[32:-17]
                     dp = "https://drive.google.com/thumbnail?id="+dp
-            user.dp = dp
+            P.dp = dp
+            P.save()
             user.save()
-            return HttpResponseRedirect(reverse("Profile", args=[UserId]))
+            return HttpResponseRedirect(reverse("auctions:Profile", args=[UserId]))
         return render(request, "auctions/editprofile.html",{
             "Profile": User.objects.get(pk=UserId),
+            "P": P,
         })
-    return HttpResponseRedirect(reverse("Profile", args=[UserId]))
+    return HttpResponseRedirect(reverse("auctions:Profile", args=[UserId]))
 
 @login_required(login_url="/login")
 def Item(request,title,id):
@@ -177,16 +185,16 @@ def Item(request,title,id):
                             comment = f'<div class="alert alert-primary" role="alert"><a href="/Users/{request.user.id}">{request.user.username}</a> Bid {request.POST["Bidding"]}.00 ₹</div>',
                         )
                         newcomment.save()
-                        return HttpResponseRedirect(reverse('Item',args=[Item.title,Item.id]))
+                        return HttpResponseRedirect(reverse('auctions:Item',args=[Item.title,Item.id]))
                 except:
                     pass
             elif request.POST['submit'] == 'transferownership':
                 try:
                     Item.user = User.objects.get(pk=request.POST['TOto'])
                     Item.save()
-                    return HttpResponseRedirect(reverse('Item',args=[Item.title,Item.id]))
+                    return HttpResponseRedirect(reverse('actions:Item',args=[Item.title,Item.id]))
                 except:
-                    return HttpResponseRedirect(reverse('Item',args=[Item.title,Item.id]))
+                    return HttpResponseRedirect(reverse('auctions:Item',args=[Item.title,Item.id]))
             elif request.POST['submit'] == 'ADDCOMMENT':
                 try:
                     newcom = request.POST['comment']
@@ -203,13 +211,13 @@ def Item(request,title,id):
                         comment = newcom,
                     )
                     newcomment.save()
-                    return HttpResponseRedirect(reverse('Item',args=[Item.title,Item.id]))
+                    return HttpResponseRedirect(reverse('auctions:Item',args=[Item.title,Item.id]))
                 except:
                     pass
             elif request.POST['submit'] == 'del':
                 C = Comment.objects.get(pk = request.POST['commentid'])
                 C.delete()
-                return HttpResponseRedirect(reverse('Item',args=[Item.title,Item.id]))
+                return HttpResponseRedirect(reverse('auctions:Item',args=[Item.title,Item.id]))
             elif request.POST['submit'] == 'reply':
                 C = Comment.objects.get(user = request.POST['commentby'])
                 return render(request, "auctions/Items.html",{
@@ -246,7 +254,7 @@ def Item(request,title,id):
             "comments": comments.order_by('created').reverse(),
         })
     except:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("auctions:index"))
 
 @login_required(login_url="/login")
 def wish(request):
@@ -268,16 +276,16 @@ def addwishlist(request):
         W.save()
         page = request.POST['page']
         if page == "profile":
-            return HttpResponseRedirect(reverse("Profile",args=[request.user.id]))
+            return HttpResponseRedirect(reverse("auctions:Profile",args=[request.user.id]))
         elif page == "wish":
-            return HttpResponseRedirect(reverse("Wish"))
+            return HttpResponseRedirect(reverse("auctions:Wish"))
         elif page == "cat":
             Cat_Id = request.POST['Cat_Id']
-            return HttpResponseRedirect(reverse("CategoryListing",args=[Cat_Id]))
+            return HttpResponseRedirect(reverse("auctions:CategoryListing",args=[Cat_Id]))
         elif page == "item":
-            return HttpResponseRedirect(reverse("Item",args=[list.title,list.id]))
-        return HttpResponseRedirect(reverse("index"))
-    return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("auctions:Item",args=[list.title,list.id]))
+        return HttpResponseRedirect(reverse("auctions:index"))
+    return HttpResponseRedirect(reverse("auctions:index"))
 
 def removewishlist(request):
     if request.method =="POST":
@@ -288,16 +296,16 @@ def removewishlist(request):
         W.save()
         page = request.POST['page']
         if page == "profile":
-            return HttpResponseRedirect(reverse("Profile", args=[request.user.id]))
+            return HttpResponseRedirect(reverse("auctions:Profile", args=[request.user.id]))
         elif page == "wish":
-            return HttpResponseRedirect(reverse("Wish"))
+            return HttpResponseRedirect(reverse("auctions:Wish"))
         elif page == "cat":
             Cat_Id = request.POST['Cat_Id']
-            return HttpResponseRedirect(reverse("CategoryListing", args=[Cat_Id]))
+            return HttpResponseRedirect(reverse("auctions:CategoryListing", args=[Cat_Id]))
         elif page == "item":
-            return HttpResponseRedirect(reverse("Item",args=[list.title,list.id]))
-        return HttpResponseRedirect(reverse("index"))
-    return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("auctions:Item",args=[list.title,list.id]))
+        return HttpResponseRedirect(reverse("auctions:index"))
+    return HttpResponseRedirect(reverse("auctions:index"))
 
 def editlisting(request,title):
     try:
@@ -352,11 +360,11 @@ def editlisting(request,title):
                     Item.category.add(Category.objects.get(id=i))
                 Item.save()
                 if count > 1 and Item.active == False:
-                    return HttpResponseRedirect(reverse('Item',args=[Item.title,Item.id]))
-                return HttpResponseRedirect(reverse('Profile',args=[request.user.id]))
+                    return HttpResponseRedirect(reverse('auctions:Item',args=[Item.title,Item.id]))
+                return HttpResponseRedirect(reverse('auctions:Profile',args=[request.user.id]))
             elif reques['action'] == "delete":
                 Item.delete()
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(reverse('auctions:index'))
             else:
                 pass
         return render(request, "auctions/editlisting.html",{
@@ -368,7 +376,7 @@ def editlisting(request,title):
             "LC": Item.category.all()
         })
     except:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("auctions:index"))
 
 def createlisting(request):
     Wishlists = Wishlist.objects.get(user = request.user.id)
@@ -390,7 +398,7 @@ def createlisting(request):
             except:
                 x = Category.objects.create(category=cat)
                 x = "Category Added"
-            return HttpResponseRedirect(reverse("createlisting"))
+            return HttpResponseRedirect(reverse("auctions:createlisting"))
         elif request.POST['action'] == "submit":
             r = request.POST.getlist('Categories')
             r = [int(i) for i in r]
@@ -414,7 +422,7 @@ def createlisting(request):
             new_bid.save()
             Item.bid = request.POST['Bid']
             Item.save()
-            return HttpResponseRedirect(reverse("Item",args=[x.title,x.id]))
+            return HttpResponseRedirect(reverse("auctions:Item",args=[x.title,x.id]))
     return render(request, "auctions/createlisting.html",{
         "Wish": len(Wishlists),
         "Cat": Category.objects.all().order_by('category'),
@@ -423,11 +431,11 @@ def createlisting(request):
 
 
 def handler404(request):
-    response = HttpResponseRedirect(reverse("index"))
+    response = HttpResponseRedirect(reverse("auctions:index"))
     response.status_code = 404
     return response
 
 def redirect(request, e):
-    response = HttpResponseRedirect(reverse("index"))
+    response = HttpResponseRedirect(reverse("auctions:index"))
     response.status_code = 404
     return response
