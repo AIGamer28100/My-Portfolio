@@ -31,7 +31,7 @@
             </li>
             {% if pa %}
               <li class="nav-item">
-                <a class="nav-link {{ EP }}" href="/wiki/{{ name }}/edit">Edit Page</a>
+                <a class="nav-link {{ EP }}" href="{% url 'encyclopedia:edit' {{ name }} %}">Edit Page</a>
               </li>
             {% endif %}
           </ul>
