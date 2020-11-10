@@ -16,7 +16,7 @@ def index(request):
     if request.method == "POST":
         x = request.POST['search']
         if x in util.list_entries():
-            return HttpResponseRedirect(f"/wiki/{x}")
+            return HttpResponseRedirect(reverse("encyclopedia:page", args=[x]))
         else:
             y = []
             l = util.list_entries()
@@ -60,7 +60,7 @@ def new(request):
                 "pa" : True
             })
         else:
-            return HttpResponseRedirect("new")
+            return HttpResponseRedirect(reverse('encyclopedia:new'))
     return render(request, "encyclopedia/new.html", {
         "entries": util.list_entries(),
         "name" : "Wiki",
@@ -77,19 +77,19 @@ def edit(request,title):
         util.save_entry(x,c)
         if len(c) > 0:
             if x in util.list_entries():
-                return HttpResponseRedirect(f"/wiki/{x}")
+                return HttpResponseRedirect(reverse('encyclopedia:page', args=[x]))
             else:
                 return render(request, "encyclopedia/index.html", {
                 "page": util.get_entry(x),
                 "pa" : True
                 })
         else:
-            return HttpResponseRedirect("new")
+            return HttpResponseRedirect(reverse('encyclopedia:new'))
     if title in util.list_entries():
         t = title
         c = util.get_entry(title)
     else:
-        return HttpResponseRedirect("/new")
+        return HttpResponseRedirect(reverse('encyclopedia:new'))
     return render(request, "encyclopedia/edit.html", {
         "name" : title,
         "title" : t,
@@ -101,4 +101,4 @@ def edit(request,title):
 def Random(request):
     l = util.list_entries()
     x = random.choice(l)
-    return HttpResponseRedirect(f"/wiki/{x}")
+    return HttpResponseRedirect(reverse('encyclopedia:page', args=[x]))
