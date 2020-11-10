@@ -27,7 +27,7 @@
               <a class="nav-link {{ CNP }}" href="{% url 'encyclopedia:new' %}">Create New Page</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {{ RP }}" href="/random">Random Page</a>
+              <a class="nav-link {{ RP }}" href="{% url 'encyclopedia:random' %}">Random Page</a>
             </li>
             {% if pa %}
               <li class="nav-item">
