@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-  <form class="form" action="{% url 'edit' title %}" method="post">
+  <form class="form" action="{% url 'encyclopedia:edit' title %}" method="post">
       {% csrf_token %}
       <br>
       <div class="form-group" novalidate>

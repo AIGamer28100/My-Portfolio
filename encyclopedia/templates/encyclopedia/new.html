@@ -8,7 +8,7 @@
     {% if pa %}
       {{ page |safe }}
     {% else %}
-      <form class="form" action="{% url 'new' %}" method="post">
+      <form class="form" action="{% url 'encyclopedia:new' %}" method="post">
           {% csrf_token %}
           <br>
           <div class="form-group" novalidate>
