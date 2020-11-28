@@ -56,10 +56,7 @@ def new(request):
         c = request.POST['Content']
         util.save_entry(x,c)
         if x in util.list_entries():
-            return render(request, "encyclopedia/index.html", {
-                "page": util.get_entry(x),
-                "pa" : True
-            })
+            return HttpResponseRedirect(reverse('encyclopedia:page',args=[x]))
         else:
             return HttpResponseRedirect(reverse('encyclopedia:new'))
     return render(request, "encyclopedia/new.html", {
