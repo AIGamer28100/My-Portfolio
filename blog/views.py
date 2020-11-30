@@ -4,6 +4,7 @@ from .models import *
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 from django.views.generic import ListView
 from django.core.mail import send_mail
+from django.urls import reverse
 # Create your views here.
 
 def post_share(request, post_id):
@@ -93,4 +94,5 @@ def new_post(request):
             status = 'published',
         )
         new_post.save()
+        return HttpResponseRedirect(reverse('blog:post_list'))
     return render(request,'blog/post/newpost.html',)
