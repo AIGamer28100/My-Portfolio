@@ -4632,6 +4632,34 @@ input[type=button].btn-block {
     width: 100%;
   }
 }
+@media (min-width: 1520px) {
+  .card-columns {
+    -moz-column-count: 4;
+         column-count: 4;
+    -moz-column-gap: 1.25rem;
+         column-gap: 1.25rem;
+    orphans: 0;
+    widows: 1;
+  }
+  .card-columns .card {
+    display: inline-block;
+    width: 100%;
+  }
+}
+@media (min-width: 1710px) {
+  .card-columns {
+    -moz-column-count: 3;
+         column-count: 3;
+    -moz-column-gap: 1.25rem;
+         column-gap: 1.25rem;
+    orphans: 0;
+    widows: 1;
+  }
+  .card-columns .card {
+    display: inline-block;
+    width: 100%;
+  }
+}
 
 .accordion {
   overflow-anchor: none;
