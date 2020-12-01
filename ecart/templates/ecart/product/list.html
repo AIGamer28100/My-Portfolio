@@ -10,29 +10,27 @@
 {% endblock %}
 
 {% block content %}
-  <div id="sidebar">
+  <div style="height:100%">
     <h3>Categories</h3>
-    <ul>
-      <li {% if not category %}class="selected"{% endif %}>
-        <a href="{% url "ecart:product_list" %}">All</a>
-      </li>
-      {% for c in categories %}
-        <li {% if category.slug == c.slug %} class="selected" {% endif %}>
-          <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-  <div id="main" class="product-list">
-    <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
-    {% for product in products %}
-    <div class="item">
-      <a href="{{ product.get_absolute_url }}">
-      <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"></a>
-      <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-      <br>
-      ${{ product.price }}
+    <div class="col-3">
+      <div class="nav flex-column nav-pills fixed-left" aria-orientation="vertical">
+        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="{% url 'ecart:product_list' %}">All</a>
+        {% for c in categories %}
+          <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+        {% endfor %}
+      </div>
     </div>
-    {% endfor %}
+    <div id="main" class="product-list col-9">
+      <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+      {% for product in products %}
+      <div class="item">
+        <a href="{{ product.get_absolute_url }}">
+        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"></a>
+        <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+        <br>
+        ${{ product.price }}
+      </div>
+      {% endfor %}
+    </div>
   </div>
 {% endblock %}
