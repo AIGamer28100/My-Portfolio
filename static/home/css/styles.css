@@ -4568,8 +4568,8 @@ input[type=button].btn-block {
          column-count: 1;
     -moz-column-gap: 1.25rem;
          column-gap: 1.25rem;
-    orphans: 1;
-    widows: 1;
+    orphans: 0;
+    widows: 0;
   }
   .card-columns .card {
     display: inline-block;
@@ -4582,8 +4582,8 @@ input[type=button].btn-block {
          column-count: 2;
     -moz-column-gap: 1.25rem;
          column-gap: 1.25rem;
-    orphans: 1;
-    widows: 1;
+    orphans: 0;
+    widows: 0;
   }
   .card-columns .card {
     display: inline-block;
@@ -4596,8 +4596,8 @@ input[type=button].btn-block {
          column-count: 3;
     -moz-column-gap: 1.25rem;
          column-gap: 1.25rem;
-    orphans: 1;
-    widows: 1;
+    orphans: 0;
+    widows: 0;
   }
   .card-columns .card {
     display: inline-block;
@@ -4607,7 +4607,7 @@ input[type=button].btn-block {
 @media (min-width: 1200px) {
   .card-columns {
     -moz-column-count: 4;
-         column-count: 4 ;
+         column-count: 4;
     -moz-column-gap: 1.25rem;
          column-gap: 1.25rem;
     orphans: 1;
@@ -4621,10 +4621,10 @@ input[type=button].btn-block {
 @media (min-width: 1440px) {
   .card-columns {
     -moz-column-count: 5;
-         column-count: 5 ;
+         column-count: 5;
     -moz-column-gap: 1.25rem;
          column-gap: 1.25rem;
-    orphans: 1;
+    orphans: 0;
     widows: 1;
   }
   .card-columns .card {
@@ -10232,4 +10232,32 @@ section.resume-section .resume-section-content {
     padding-top: 5rem;
     padding-bottom: 5rem;
   }
+}
+
+.card{
+  transition: all 0.5s ease !important;
+}
+
+.card:hover {
+  transition: all 0.5s ease !important;
+}
+
+.card .card-title {
+  transition: all 0.5s ease !important;
+}
+
+.card .card-text {
+  transition: all 0.5s ease !important;
+}
+
+.card .blockquote-footer {
+  opacity: 0 !important;
+  max-height: 0px !important;
+  transition: all 0.5s ease !important;
+}
+
+.card:hover .blockquote-footer {
+  opacity: 1 !important;
+  max-height: inherit !important;
+  transition: all 0.5s ease !important;
 }
