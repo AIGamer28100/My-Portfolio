@@ -8,7 +8,7 @@ def list_entries():
     """
     Returns a list of all names of encyclopedia entries.
     """
-    _, filenames = default_storage.listdir("aigamer.pythonanywhere.com/entries")
+    _, filenames = default_storage.listdir("./entries")
     return list(sorted(re.sub(r"\.md$", "", filename)
                 for filename in filenames if filename.endswith(".md")))
 
@@ -19,7 +19,7 @@ def save_entry(title, content):
     content. If an existing entry with the same title already exists,
     it is replaced.
     """
-    filename = f"aigamer.pythonanywhere.com/entries/{title}.md"
+    filename = f"./entries/{title}.md"
     if default_storage.exists(filename):
         default_storage.delete(filename)
     try:
@@ -33,7 +33,7 @@ def get_entry(title):
     entry exists, the function returns None.
     """
     try:
-        f = default_storage.open(f"aigamer.pythonanywhere.com/entries/{title}.md")
+        f = default_storage.open(f"./entries/{title}.md")
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
