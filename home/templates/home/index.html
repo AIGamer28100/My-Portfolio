@@ -327,7 +327,7 @@
                 <div class="resume-section-content">
                   <h2 class="mb-5">My Projects</h2>
                   <div class="card-columns">
-                    <a href="https://aigamer28100.github.io/Movie-Lens-Dataset-Visualization-and-Prediction/" class="card mx-1" target="_blank" style="text-decoration:none">
+                    <a href="https://aigamer28100.github.io/Movie-Lens-Dataset-Visualization-and-Prediction/" class="card mx-1 project-cards" target="_blank" style="text-decoration:none">
                       <img class="card-img-top p-3 lazyload" src="https://www.adorama.com/alc/wp-content/uploads/2015/07/shutterstock_189292901.jpg" alt="Google Search">
                       <div class="card-body text-center">
                         <h4 class="card-title">Movie Lens Dataset.</h4>
@@ -335,7 +335,7 @@
                         <footer class="blockquote-footer"></footer>
                       </div>
                     </a>
-                    <a href="https://aigamer28100.github.io/Google-Search/" class="card mx-1" target="_blank" style="text-decoration:none">
+                    <a href="https://aigamer28100.github.io/Google-Search/" class="card mx-1 project-cards" target="_blank" style="text-decoration:none">
                       <img class="card-img-top p-3 lazyload" src="https://pluspng.com/img-png/google-logo-png-open-2000.png" alt="Google Search">
                       <div class="card-body text-center">
                         <h4 class="card-title">Google Search</h4>
@@ -343,7 +343,7 @@
                         <footer class="blockquote-footer">This is a simple my own version of google serach page recreated using HTML and CSS which redirects you the actual google's result upon search.</footer>
                       </div>
                     </a>
-                    <a href="{% url 'encyclopedia:index' %}" class="card mx-1" target="_blank" style="text-decoration:none">
+                    <a href="{% url 'encyclopedia:index' %}" class="card mx-1 project-cards" target="_blank" style="text-decoration:none">
                       <img class="card-img-top p-3 lazyload" src="https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1200px-Wikipedia-logo-v2.svg.png" alt="Encyclopedia">
                       <div class="card-body text-center">
                         <h4 class="card-title">The Encyclopedia</h4>
@@ -351,20 +351,58 @@
                         <footer class="blockquote-footer">A Encyclopedia which allows users ( anonymously ) to add new contents and read, edit previously available contents.</footer>
                       </div>
                     </a>
-                    <a href="{% url 'blog:post_list' %}" class="card mx-1" target="_blank" style="text-decoration:none">
-                      <img class="card-img-top p-3 lazyload" src="https://www.flaticon.com/svg/static/icons/svg/60/60736.svg" alt="Blog">
-                      <div class="card-body text-center">
-                        <h4 class="card-title">Blog Posts</h4>
-                        <p class="card-text">A Basic Blog created using Django Framework</p>
-                        <footer class="blockquote-footer">A Medium like Blog site where users can create new posts, view and share posts via Gmail</footer>
-                      </div>
-                    </a>
-                    <a href="{% url 'auctions:index' %}" class="card mx-1" target="_blank" style="text-decoration:none">
+                    <a href="{% url 'auctions:index' %}" class="card mx-1 project-cards" target="_blank" style="text-decoration:none">
                       <img class="card-img-top p-3 lazyload" src="https://i.kisscc0.com/20190403/he/kisscc0-computer-icons-gavel-bidding-auction-art-mono-auction-5ca442e2505ba1.7977922815542688983292.png" alt="Auctions">
                       <div class="card-body text-center">
                         <h4 class="card-title">E-Commerce</h4>
                         <p class="card-text">eBay like E-Commerce Auctions Site designed using Django Framework</p>
                         <footer class="blockquote-footer">This is a eBay like E-Commerce Auction site that will allow user to post auction listing, place bids on listings, comment on those listings and add listings to a "watchlist."</footer>
+                      </div>
+                    </a>
+                    <!-- href="{% url 'blog:post_list' %}" -->
+                    <a class="card mx-1 project-cards" target="_blank" style="text-decoration:none">
+                      <img class="card-img-top p-3 lazyload" src="https://www.flaticon.com/svg/vstatic/svg/3027/3027644.svg?token=exp=1610991951~hmac=c6e6b0f59401a657ac4b39290b8a7cb5" alt="Blog">
+                      <div class="card-body text-center">
+                        <h4 class="card-title">SDES</h4>
+                        <p class="card-text">A Social Disancing Enforcement System </p>
+                        <footer class="blockquote-footer">Currently under Beta Testing stage. Works only with the camera from the system it ran locally.</footer>
+                      </div>
+                    </a>
+                    <!-- href="{% url 'blog:post_list' %}" -->
+                    <a class="card mx-1 project-cards" target="_blank" style="text-decoration:none">
+                      <img class="card-img-top p-3 lazyload" src="https://www.flaticon.com/svg/static/icons/svg/60/60736.svg" alt="Blog">
+                      <div class="card-body text-center">
+                        <h4 class="card-title">Blog Posts</h4>
+                        <div class="project-hover text-center lazyload">
+                          <div class="project-hover-content">
+                            <br>
+                            <i class="fas fa-tools fa-3x lazyload"></i>
+                            <br><br>
+                            <span class="h4"><b>Under Maintenance</b></span>
+                            <br><br>
+                          </div>
+                        </div>
+                        <footer class="blockquote-footer"></footer>
+                        <!-- <p class="card-text">A Basic Blog created using Django Framework</p> -->
+                        <!-- <footer class="blockquote-footer">A Medium like Blog site where users can create new posts, view and share posts via Gmail</footer> -->
+                      </div>
+                    </a>
+                    <a href="{% url 'ecart:product_list' %}" class="card mx-1 project-cards" target="_blank" style="text-decoration:none">
+                      <img class="card-img-top p-3 lazyload" src="https://www.designfreelogoonline.com/wp-content/uploads/2016/07/000749-online-store-logos-design-free-online-E-commerce-cart-logo-maker-01.png" alt="E-Cart">
+                      <div class="card-body text-center">
+                        <h4 class="card-title">E-Shopping</h4>
+                        <div class="project-hover text-center lazyload">
+                          <div class="project-hover-content">
+                            <br>
+                            <i class="fas fa-hard-hat	fa-4x lazyload"></i>
+                            <br><br>
+                            <span class="h4"><b>Under Development</b></span>
+                            <br><br>
+                          </div>
+                        </div>
+                        <footer class="blockquote-footer"></footer>
+                        <!-- <p class="card-text">Amazon, Flipkart like E-Shopping Site designed using Django Framework</p> -->
+                        <!-- <footer class="blockquote-footer">This is a eBay like E-Commerce Auction site that will allow user to post auction listing, place bids on listings, comment on those listings and add listings to a "watchlist."</footer> -->
                       </div>
                     </a>
                   </div>
