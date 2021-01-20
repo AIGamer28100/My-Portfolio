@@ -4562,7 +4562,7 @@ input[type=button].btn-block {
 }
 
 .card-columns .card {
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   -moz-column-count: 1;
        column-count: 1;
 }
@@ -4577,7 +4577,7 @@ input[type=button].btn-block {
   }
   .card-columns .card {
     display: inline-block;
-    width: 100%;
+    width: 70%;
   }
 }
 @media (min-width: 768px) {
@@ -4591,7 +4591,7 @@ input[type=button].btn-block {
   }
   .card-columns .card {
     display: inline-block;
-    width: 100%;
+    width: 80%;
   }
 }
 @media (min-width: 992px) {
@@ -4605,7 +4605,7 @@ input[type=button].btn-block {
   }
   .card-columns .card {
     display: inline-block;
-    width: 100%;
+    width: 90%;
   }
 }
 @media (min-width: 1200px) {
@@ -4619,7 +4619,7 @@ input[type=button].btn-block {
   }
   .card-columns .card {
     display: inline-block;
-    width: 100%;
+    width: 95%;
   }
 }
 @media (min-width: 1440px) {

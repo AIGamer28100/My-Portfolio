@@ -18,7 +18,7 @@
     <div class="media-body">
       <form class="form needs-validation" action="{% url 'auctions:createlisting' %}" method="post" id="all" validate >
         {% csrf_token %}
-)
+        
         <!-- Title Starts -->
         <div class="form-group row">
           <label class="col-sm-2 col-form-label" for="LT"><b>Title </b></label>
