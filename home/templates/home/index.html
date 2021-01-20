@@ -20,7 +20,7 @@
       <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i&display=swap" rel="preload" as="style" type="text/css" onload="this.onload=null;this.rel='stylesheet'" />
       <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/devicons/devicon@master/devicon.min.css" onload="this.onload=null;this.rel='stylesheet'">
       <!-- Core theme CSS (includes Bootstrap)-->
-      <link href="./static/home/css/styles.css?{% now 'U' %}" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+      <link href="./static/home/css/styles.css" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
       <meta name="google-site-verification" content="BLCBxcfjPy-aTrfDc5Sm9Yi5SxOtWqu9ZReIp_JhG5Q" />
 
       <script type="application/ld+json">
@@ -125,7 +125,7 @@
                         <div class="flex-shrink-0"><span class="text-primary">December 2011 - March 2013</span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
+                        <div class="flex?{% now 'U' %}-grow-1">
                             <h3 class="mb-0">Junior Web Designer</h3>
                             <div class="subheading mb-3">Shout! Media Productions</div>
                             <p>Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.</p>
@@ -361,7 +361,7 @@
                     </a>
                     <!-- href="{% url 'blog:post_list' %}" -->
                     <a class="card mx-1 project-cards" target="_blank" style="text-decoration:none">
-                      <img class="card-img-top p-3 lazyload" src="https://www.flaticon.com/svg/vstatic/svg/3027/3027644.svg?token=exp=1610991951~hmac=c6e6b0f59401a657ac4b39290b8a7cb5" alt="Blog">
+                      <img class="card-img-top p-3" src="https://www.flaticon.com/svg/vstatic/svg/3027/3027644.svg?token=exp=1610991951~hmac=c6e6b0f59401a657ac4b39290b8a7cb5" alt="Blog">
                       <div class="card-body text-center">
                         <h4 class="card-title">SDES</h4>
                         <p class="card-text">A Social Disancing Enforcement System </p>
@@ -370,13 +370,13 @@
                     </a>
                     <!-- href="{% url 'blog:post_list' %}" -->
                     <a class="card mx-1 project-cards" target="_blank" style="text-decoration:none">
-                      <img class="card-img-top p-3 lazyload" src="https://www.flaticon.com/svg/static/icons/svg/60/60736.svg" alt="Blog">
+                      <img class="card-img-top p-3" src="https://www.flaticon.com/svg/static/icons/svg/60/60736.svg" alt="Blog">
                       <div class="card-body text-center">
                         <h4 class="card-title">Blog Posts</h4>
-                        <div class="project-hover text-center lazyload">
+                        <div class="project-hover text-center">
                           <div class="project-hover-content">
                             <br>
-                            <i class="fas fa-tools fa-3x lazyload"></i>
+                            <i class="fas fa-tools fa-3x"></i>
                             <br><br>
                             <span class="h4"><b>Under Maintenance</b></span>
                             <br><br>
@@ -391,10 +391,10 @@
                       <img class="card-img-top p-3 lazyload" src="https://www.designfreelogoonline.com/wp-content/uploads/2016/07/000749-online-store-logos-design-free-online-E-commerce-cart-logo-maker-01.png" alt="E-Cart">
                       <div class="card-body text-center">
                         <h4 class="card-title">E-Shopping</h4>
-                        <div class="project-hover text-center lazyload">
+                        <div class="project-hover text-center">
                           <div class="project-hover-content">
                             <br>
-                            <i class="fas fa-hard-hat	fa-4x lazyload"></i>
+                            <i class="fas fa-hard-hat	fa-4x"></i>
                             <br><br>
                             <span class="h4"><b>Under Development</b></span>
                             <br><br>
@@ -415,6 +415,6 @@
         <!-- Third party plugin JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <!-- Core theme JS-->
-        <script src="./static/home/js/scripts.js?{% now 'U' %}"></script>
+        <script src="./static/home/js/scripts.js"></script>
     </body>
 </html>
