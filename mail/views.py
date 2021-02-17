@@ -139,11 +139,13 @@ def login_view(request):
     if request.method == "POST":
 
         # Attempt to sign user in
-        email = request.POST["email"]
-        password = request.POST["password"]
-        user = User.objects.get(email=email)
-        user = authenticate(request, username=user.username, password=password)
-        print(User.objects.all())
+        try:
+            email = request.POST["email"]
+            password = request.POST["password"]
+            user = User.objects.get(email=email)
+            user = authenticate(request, username=user.username, password=password)
+        except:
+            user = None
         # Check if authentication successful
         if user is not None:
             login(request, user)
@@ -186,6 +188,7 @@ def register(request):
         login(request, user)
         return HttpResponseRedirect(reverse("mail:index"))
     else:
+        logout(request)
         return render(request, "mail/register.html")
 
 @csrf_exempt
