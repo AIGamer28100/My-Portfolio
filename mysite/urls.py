@@ -27,6 +27,7 @@ urlpatterns = [
     path('ecart/', include('ecart.urls', namespace='ecart')),
     path('encyclopedia/', include('encyclopedia.urls', namespace='encyclopedia')),
     path('auctions/', include('auctions.urls', namespace='auctions')),
+    path('hmail/', include('mail.urls', namespace='mail')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

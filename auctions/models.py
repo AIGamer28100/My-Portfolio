@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
     dp = models.URLField(max_length=1000, default="https://www.dia.org/sites/default/files/No_Img_Avail.jpg")
 
 class Category(models.Model):
@@ -12,7 +13,7 @@ class Category(models.Model):
         return f"{self.category}"
 
 class Listing(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, editable=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=False, editable=True)
     title = models.CharField(max_length = 64, )
     discription = models.CharField(max_length = 200, blank=True, )
     category = models.ManyToManyField(Category, blank = True, related_name = "Category", )
@@ -27,7 +28,7 @@ class Listing(models.Model):
 
 class Bid(models.Model):
     item = models.ForeignKey(Listing, on_delete = models.CASCADE, blank = False, related_name = "Listing", default = None, )
-    bidder = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "Bidder",  blank = False, default = None, )
+    bidder = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "Bidder",  blank = False, default = None, )
     bid = models.PositiveIntegerField(blank = False, default = 0, )
 
     def __str__(self):
@@ -35,7 +36,7 @@ class Bid(models.Model):
 
 class Comment(models.Model):
     item = models.ForeignKey(Listing, on_delete = models.CASCADE, blank = False, null = False, related_name = "Comment_on", default = None, )
-    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "Profile",  blank = False, default = None, )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "Profile",  blank = False, default = None, )
     comment = models.CharField(max_length = 500, default = None, )
     created =  models.DateTimeField(auto_now=False, auto_now_add=True,)
 
@@ -43,7 +44,7 @@ class Comment(models.Model):
         return f"Comment on {self.item.title} by {self.user.username}"
 
 class Wishlist(models.Model):
-    user = models.OneToOneField(User, on_delete = models.CASCADE, related_name = "User_Wishlist", )
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "User_Wishlist", )
     wishlist = models.ManyToManyField(Listing, blank = True, related_name = "WishList")
 
     def __str__(self):

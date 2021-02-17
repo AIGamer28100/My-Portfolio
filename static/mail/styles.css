@@ -1,0 +1,102 @@
+html {
+  min-height: 100%;
+}
+
+body {
+  height: -webkit-fill-available;
+}
+
+.nav-link {
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.nav-item {
+  margin: 5px 5px;
+}
+
+.navbar-toggler {
+  border: 0px;
+}
+
+#mailbox-container{
+  padding: 10px 20px;
+}
+
+.mail {
+  font-size: 20px;
+  text-align: left;
+  color: black !important
+}
+
+.mail:hover {
+  border: 2px;
+  color: black !important
+}
+
+.mailbody {
+  font-size: 15px;
+}
+
+.read .mailsender , .read .mailsubject {
+  font-weight: lighter;
+}
+
+.unread .mailsender, .unread .mailsubject {
+  font-weight: normal;
+}
+
+.mailbody {
+  font-weight: lighter !important;
+}
+
+.mailtimestamp {
+  font-size: 12px;
+}
+
+.form-floating > #view-mail-timestamp {
+  --bs-blue: #0d6efd;
+  --bs-indigo: #6610f2;
+  --bs-purple: #6f42c1;
+  --bs-pink: #d63384;
+  --bs-red: #dc3545;
+  --bs-orange: #fd7e14;
+  --bs-yellow: #ffc107;
+  --bs-green: #198754;
+  --bs-teal: #20c997;
+  --bs-cyan: #0dcaf0;
+  --bs-white: #fff;
+  --bs-gray: #6c757d;
+  --bs-gray-dark: #343a40;
+  --bs-primary: #0d6efd;
+  --bs-secondary: #6c757d;
+  --bs-success: #198754;
+  --bs-info: #0dcaf0;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+  --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  --bs-font-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+  font-family: var(--bs-font-sans-serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #212529;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: right!important;
+  position: absolute;
+  top: 0;
+  left: 90%;
+  height: 100%;
+  padding: 1rem .75rem;
+  pointer-events: none;
+  border: 1px solid transparent;
+  transform-origin: 0 0;
+  transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+  opacity: .65;
+  transform: scale(.85) translateY(-.5rem) translateX(.15rem);
+}

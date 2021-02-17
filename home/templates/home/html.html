@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Display Webcam Stream</title>
+
+    <style>
+      #videoElement {
+      	width: 500px;
+      	height: 375px;
+      	background-color: #666;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <canvas id="canvasOutput"></canvas>
+    	<video autoplay="true" id="videoElement" allow="geoloaction"></video>
+
+      <form method="post">
+        {% csrf_token %}
+        <input value="" name="image" id="hidden_image" hidden>
+      </form>
+
+      <div class="video">
+        <img id="image" src="">
+      </div>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+      function capture(video, scaleFactor) {
+          if(scaleFactor == null){
+              scaleFactor = 1;
+          }
+          var w = video.videoWidth * scaleFactor;
+          var h = video.videoHeight * scaleFactor;
+          var canvas = document.createElement('canvas');
+              canvas.width  = w;
+              canvas.height = h;
+          var ctx = canvas.getContext('2d');
+              ctx.drawImage(video, 0, 0, w, h);
+          return canvas;
+      }
+      const video = document.querySelector("#videoElement");
+      if (navigator.mediaDevices) {
+        navigator.mediaDevices.getUserMedia({ video: true , audio : false ,})
+          .then(function (stream) {
+            video.srcObject = stream;
+            video.play()
+          })
+          .catch(function (err0r) {
+            console.log(`Something went wrong! ${err0r}`);
+        });
+        setTimeout(() =>{
+          var frame = capture(video, 1)
+          var data = frame.toDataURL("image/png");
+          console.log(data);
+          console.log(JSON.stringify(data));
+          $.ajax({
+            type: "POST",
+            url: '/io/',
+            data: {
+              'videoURL': JSON.stringify(data)
+            },
+            datatype: 'json'
+          });
+          return false;
+        }, 700);
+      }
+      while (true) {
+        setTimeout(() => {
+          fetch(`/io/`)
+            .then(response => response.text())
+            .then(text => {
+              console.log(text);
+              document.querySelector('#image').src = text
+            });
+        }, 1000);
+        return false;
+      }
+
+    </script>
+  </body>
+</html>

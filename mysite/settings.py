@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'auctions.apps.AuctionsConfig',
     'encyclopedia.apps.EncyclopediaConfig',
+    'mail.apps.MailConfig',
     'orders.apps.OrdersConfig',
 ]
 
@@ -109,6 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+AUTH_USER_MODEL = 'mail.User'
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
