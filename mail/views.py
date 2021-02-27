@@ -118,15 +118,27 @@ def email(request, email_id):
 
     # Update whether email is read or should be archived
     elif request.method == "PUT":
+        msg = "No input"
         data = json.loads(request.body)
         if data.get("read") is not None:
-            email.read = data["read"]
-        if data.get("archived") is not None:
-            email.archived = data["archived"]
-        if data.get("delete") is not None:
+            # print(data.get("read", ""))
+            email.read = data.get("read")
+            msg = "Got Read/Unread" + str(data.get("read"))
+            email.save()
+        elif data.get("archive") is not None:
+            # print(data.get("read", ""))
+            email.archived = data.get("archive")
+            msg = "Got Archived" + str(data.get("archive"))
+            email.save()
+        elif data.get("delete") is not None:
+            # print(data.get("delete", ""))
+            email.save()
             email.delete()
-        email.save()
-        return HttpResponse(status=200)
+            msg = "Got Delete" + str(data.get("delete"))
+        return JsonResponse({
+            "status": msg,
+            "input": data
+        },status=200)
 
     # Email must be via GET or PUT
     else:

@@ -6,15 +6,15 @@
       <div class="col-md container-fluid">
         <h1 class="display-5" id="view-mail-subject" style="font-weight: 500;"></h1>
         <div class="row justify-content-evenl" id="actions">
-          <button type="submit" id="archive-mail" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+          <button type="submit" id="archive-mail" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" onclick="Archived({{ id }})">
             <i id="switcharchive" class="fas fa-2x"></i>
           </button>
 
-          <button type="submit" id="mail-read-unread" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+          <button type="submit" id="mail-read-unread" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" onclick="ChangeViewedStatus({{ id }})">
             <i id="switchread" class="fas fa-2x"></i>
           </button>
 
-          <button type="submit" id="mail-trash" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Mail">
+          <button type="submit" id="mail-trash" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Mail" onclick="DeleteMail({{ id }})">
             <i class="fas fa-trash fa-2x"></i>
           </button>
         </div>

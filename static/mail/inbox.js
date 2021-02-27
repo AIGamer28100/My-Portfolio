@@ -290,17 +290,82 @@ function extractContent(s) {
   return span.textContent || span.innerText;
 };
 
-// function Archived(mail) {
-//   fetch(`/emails/${mail}`)
-//   .then(response => response.json())
-//   .then(email => {
-//     if (email.read) {
-//       fetch(`/emails/${mail}`,{
-//         method: 'PUT',
-//         body: JSON.stringify({
-//           read: false
-//         })
-//       })
-//       return false;
-//     };
-// }
+function Archived(mail) {
+  fetch(`/hmail/emails/${mail}`)
+  .then(response => response.json())
+  .then(email => {
+    if (email['archived']) {
+      fetch(`/hmail/emails/${mail}`,{
+        method: 'PUT',
+        body: JSON.stringify({
+          archive: false
+        })
+      })
+      .then(response => response.json())
+      .then(status => {
+        console.log(status)
+      });
+      window.location.pathname = `/hmail/u/inbox/${mail}`
+    }
+    else {
+      fetch(`/hmail/emails/${mail}`,{
+        method: 'PUT',
+        body: JSON.stringify({
+          archive: true
+        })
+      })
+      .then(response => response.json())
+      .then(status => {
+        console.log(status)
+      });
+      window.location.pathname = `/hmail/u/archive/${mail}`
+    }
+  })
+}
+
+function ChangeViewedStatus(mail, status) {
+  fetch(`/hmail/emails/${mail}`)
+  .then(response => response.json())
+  .then(email => {
+    if (email['read']) {
+      fetch(`/hmail/emails/${mail}`,{
+        method: 'PUT',
+        body: JSON.stringify({
+          read: false
+        })
+      })
+      .then(response => response.json())
+      .then(status => {
+        console.log(status)
+      });
+    }
+    else {
+      fetch(`/hmail/emails/${mail}`,{
+        method: 'PUT',
+        body: JSON.stringify({
+          read: true
+        })
+      })
+      .then(response => response.json())
+      .then(status => {
+        console.log(status)
+      });
+    }
+  })
+  var mailbox = document.querySelector('#mailbox').innerText;
+  window.location.pathname = `hmail/u/${mailbox}`
+}
+
+function DeleteMail(mail) {
+  fetch(`/hmail/emails/${mail}`,{
+    method: 'PUT',
+    body: JSON.stringify({
+      delete: true
+    })
+  })
+  .then(response => response.json())
+  .then(status => {
+    console.log(status)
+  });
+  window.location.pathname = `hmail`
+}
