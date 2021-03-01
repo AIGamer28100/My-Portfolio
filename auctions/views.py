@@ -8,11 +8,19 @@ from django import forms
 
 import time
 from .models import *
+from mail.models import User
+
 
 # Home Page
 def index(request):
     if request.user.is_authenticated:
-        Wishlists = Wishlist.objects.get(user = request.user.id)
+        for i in range(0, 10):
+            try :
+                Wishlists = Wishlist.objects.get(user = request.user)
+            except :
+                Wishlists = Wishlist(user = request.user)
+                Wishlists.save()
+
         Wishlists = Wishlists.wishlist.all()
         Active = [i.title for i in Wishlists]
         return render(request, "auctions/index.html",{
@@ -71,7 +79,7 @@ def register(request):
             user.save()
             W = Wishlist(user=user)
             W.save()
-            P = Profile(user=user)
+            P = UserProfile(user=user)
             P.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {
@@ -114,7 +122,12 @@ def CategoryListing(request,CategoryList):
 
 
 def Profile(request,UserId):
-    P = UserProfile.objects.get(user=request.user)
+    for i in range(0, 10):
+        try :
+            P = UserProfile.objects.get(user = request.user)
+        except :
+            P = UserProfile(user = request.user)
+            P.save()
     if request.user.is_authenticated:
         Wishlists = Wishlist.objects.get(user = request.user.id)
         Wishlists = Wishlists.wishlist.all()
@@ -134,8 +147,8 @@ def editprofile(request,UserId):
     P = UserProfile.objects.get(user=request.user)
     if request.method == "POST":
         if request.POST['edit'] == "submit":
-            user = User.objects.get(pk=request.user.id)
-            P = UserProfile.objects.get(user=request.user)
+            user = User.objects.get(pk = request.user.id)
+            P = UserProfile.objects.get(user = request.user)
             user.first_name = request.POST['First_name']
             user.last_name = request.POST['Last_name']
             user.email = request.POST['Email']
@@ -153,7 +166,7 @@ def editprofile(request,UserId):
             user.save()
             return HttpResponseRedirect(reverse("auctions:Profile", args=[UserId]))
         return render(request, "auctions/editprofile.html",{
-            "Profile": User.objects.get(pk=UserId),
+            "Profile": UserProfile.objects.get(user=request.user),
             "P": P,
         })
     return HttpResponseRedirect(reverse("auctions:Profile", args=[UserId]))
