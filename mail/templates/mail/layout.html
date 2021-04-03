@@ -61,10 +61,8 @@
           </div>
         </main>
       {% else %}
-        <div class="position-absolute container-fluid rounded">
           {% block login %}
           {% endblock %}
-        </div>
       {% endif %}
       <span id="mailbox" hidden>{{ mailbox }}</span>
       <span id="id" hidden>{{ id }}</span>

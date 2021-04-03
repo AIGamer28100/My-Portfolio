@@ -71,17 +71,17 @@ function compose_email() {
 }
 
 function load_mailbox(mailbox) {
-  if (window.location.pathname !== `hmail/u/${mailbox}`) {
-      window.location.pathname = `hmail/u/${mailbox}`;
+  if (window.location.pathname !== `/hmail/u/${mailbox}`) {
+      window.location.pathname = `/hmail/u/${mailbox}`;
   }
   document.querySelector(`#${mailbox}`).classList.add('active');
-  if (window.location.pathname === `hmail/u/compose`) {
+  if (window.location.pathname === `/hmail/u/compose`) {
     compose_email();
   }else {
     // Show the mailbox and hide other views
     document.querySelector('#email-view-contents').style.display = 'block';
     document.querySelector('#compose-view').style.display = 'none';
-    fetch(`hmail/emails/${mailbox}`)
+    fetch(`/hmail/emails/${mailbox}`)
     .then(response => response.json())
     .then(emails => {
       var contents = '';
@@ -179,10 +179,10 @@ function load_mailbox(mailbox) {
 }
 
 function load_mail(mailbox,mail) {
-  if (window.location.pathname !== `hmail/u/${mailbox}/${mail}`) {
-      window.location.pathname = `hmail/u/${mailbox}/${mail}`;
+  if (window.location.pathname !== `/hmail/u/${mailbox}/${mail}`) {
+      window.location.pathname = `/hmail/u/${mailbox}/${mail}`;
 
-      fetch(`hmail/emails/${mail}`,{
+      fetch(`/hmail/emails/${mail}`,{
         method: 'PUT',
         body: JSON.stringify({
           read: false
@@ -190,14 +190,14 @@ function load_mail(mailbox,mail) {
       })
   }
   document.querySelector(`#${mailbox}`).classList.add('active');
-  if (window.location.pathname === `hmail/u/compose`) {
+  if (window.location.pathname === `/hmail/u/compose`) {
     compose_email()
   }
   // Show the mailox and hide other views
   document.querySelector('#email-view-contents').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
 
-  fetch(`hmail/emails/${mail}`)
+  fetch(`/hmail/emails/${mail}`)
   .then(response => response.json())
   .then(email => {
     document.querySelector('#view-mail-subject').innerHTML = `${email['subject']}`;
@@ -267,7 +267,7 @@ function validate() {
 }
 
 function handleForm(event) {
-  fetch('hmail/emails', {
+  fetch('/hmail/emails', {
     method: 'POST',
     body: JSON.stringify({
       recipients: `${document.querySelector('#compose-recipients').value}`,
@@ -290,17 +290,82 @@ function extractContent(s) {
   return span.textContent || span.innerText;
 };
 
-// function Archived(mail) {
-//   fetch(`/emails/${mail}`)
-//   .then(response => response.json())
-//   .then(email => {
-//     if (email.read) {
-//       fetch(`/emails/${mail}`,{
-//         method: 'PUT',
-//         body: JSON.stringify({
-//           read: false
-//         })
-//       })
-//       return false;
-//     };
-// }
+function Archived(mail) {
+  fetch(`/hmail/emails/${mail}`)
+  .then(response => response.json())
+  .then(email => {
+    if (email['archived']) {
+      fetch(`/hmail/emails/${mail}`,{
+        method: 'PUT',
+        body: JSON.stringify({
+          archive: false
+        })
+      })
+      .then(response => response.json())
+      .then(status => {
+        console.log(status)
+      });
+      window.location.pathname = `/hmail/u/inbox/${mail}`
+    }
+    else {
+      fetch(`/hmail/emails/${mail}`,{
+        method: 'PUT',
+        body: JSON.stringify({
+          archive: true
+        })
+      })
+      .then(response => response.json())
+      .then(status => {
+        console.log(status)
+      });
+      window.location.pathname = `/hmail/u/archive/${mail}`
+    }
+  })
+}
+
+function ChangeViewedStatus(mail, status) {
+  fetch(`/hmail/emails/${mail}`)
+  .then(response => response.json())
+  .then(email => {
+    if (email['read']) {
+      fetch(`/hmail/emails/${mail}`,{
+        method: 'PUT',
+        body: JSON.stringify({
+          read: false
+        })
+      })
+      .then(response => response.json())
+      .then(status => {
+        console.log(status)
+      });
+    }
+    else {
+      fetch(`/hmail/emails/${mail}`,{
+        method: 'PUT',
+        body: JSON.stringify({
+          read: true
+        })
+      })
+      .then(response => response.json())
+      .then(status => {
+        console.log(status)
+      });
+    }
+  })
+  var mailbox = document.querySelector('#mailbox').innerText;
+  window.location.pathname = `hmail/u/${mailbox}`
+}
+
+function DeleteMail(mail) {
+  fetch(`/hmail/emails/${mail}`,{
+    method: 'PUT',
+    body: JSON.stringify({
+      delete: true
+    })
+  })
+  .then(response => response.json())
+  .then(status => {
+    console.log(status)
+  });
+  window.location.pathname = `hmail`
+}
