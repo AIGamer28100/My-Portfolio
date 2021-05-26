@@ -34,3 +34,14 @@ class Email(models.Model):
             "read": self.read,
             "archived": self.archived
         }
+
+    def ReplySerialize(self):
+        return {
+            "id": self.id,
+            "sender": self.sender.email,
+            "senderName": self.sender.username,
+            "recipients": [user.email for user in self.recipients.all()],
+            "recipientsName" : [user.username for user in self.recipients.all()],
+            "subject": self.subject,
+            "body": self.body,
+        }

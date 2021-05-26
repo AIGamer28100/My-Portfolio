@@ -43,6 +43,8 @@ def compose(request):
     recipients = []
     for email in emails:
         try:
+            if len(email) == 0:
+                continue
             user = User.objects.get(email=email)
             recipients.append(user)
         except User.DoesNotExist:
@@ -53,6 +55,8 @@ def compose(request):
     # Get contents of email
     subject = data.get("subject", "")
     body = data.get("body", "")
+
+    body = body.replace("\r\n", '\r<br>\n')
 
     # Create one email for each recipient, plus sender
     users = set()
@@ -109,10 +113,11 @@ def email(request, email_id):
     # Query for requested email
     try:
         email = Email.objects.get(user=request.user, pk=email_id)
-    except Email.DoesNotExist:
+    except:
         return JsonResponse({"error": "Email not found."}, status=404)
 
     # Return email contents
+    print("checking get method")
     if request.method == "GET":
         return JsonResponse(email.serialize())
 
@@ -145,7 +150,6 @@ def email(request, email_id):
         return JsonResponse({
             "error": "GET or PUT request required."
         }, status=400)
-
 
 def login_view(request):
     if request.method == "POST":

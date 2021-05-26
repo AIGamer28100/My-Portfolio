@@ -6,6 +6,17 @@ body {
   height: -webkit-fill-available;
 }
 
+#compose_edit {
+  outline: none;
+}
+#compose_body {
+  overflow-y: scroll;
+}
+
+.compose_edit_to {
+  outline: none;
+}
+
 .nav-link {
   min-width: 100px;
   max-width: 100px;
@@ -38,12 +49,14 @@ body {
   font-size: 15px;
 }
 
-.read .mailsender , .read .mailsubject {
+.read{
   font-weight: lighter;
+  background: #fff !important;
 }
 
-.unread .mailsender, .unread .mailsubject {
+.unread{
   font-weight: normal;
+  background: linear-gradient(#fdfdfd, #f8f8f8) !important;
 }
 
 .mailbody {
@@ -51,7 +64,8 @@ body {
 }
 
 .mailtimestamp {
-  font-size: 12px;
+  font-size: 12px !important;
+  font-weight: 400 !important;
 }
 
 .form-floating > #view-mail-timestamp {

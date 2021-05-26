@@ -2,49 +2,63 @@
 {% load static %}
 
 {% block body %}
-    <div id="email-view-contents" class="pe-5 pt-2 clearfix" style="display:none;">
-      <div class="col-md container-fluid">
-        <h1 class="display-5" id="view-mail-subject" style="font-weight: 500;"></h1>
-        <div class="row justify-content-evenl" id="actions">
-          <button type="submit" id="archive-mail" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" onclick="Archived({{ id }})">
-            <i id="switcharchive" class="fas fa-2x"></i>
-          </button>
+  <div id="email-view-contents" class="pe-5 pt-2 clearfix" style="display:none;">
+    <div class="col-md container-fluid">
+      <h1 class="display-5" id="view-mail-subject" style="font-weight: 500;"></h1>
+      <div class="row justify-content-evenl" id="actions">
 
-          <button type="submit" id="mail-read-unread" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" onclick="ChangeViewedStatus({{ id }})">
-            <i id="switchread" class="fas fa-2x"></i>
-          </button>
+        <button type="submit" id="mail-reply" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Reply All" onclick="reply({{ id }})">
+          <i class="fas fa-reply fa-2x"></i>
+        </button>
+        
+        <button type="submit" id="archive-mail" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" onclick="Archived({{ id }})">
+          <i id="switcharchive" class="fas fa-2x"></i>
+        </button>
 
-          <button type="submit" id="mail-trash" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Mail" onclick="DeleteMail({{ id }})">
-            <i class="fas fa-trash fa-2x"></i>
-          </button>
-        </div>
-        <div class="form-floating" id="view-mail-details">
-          <span id="recipients-mailId" class="form-control form-control-plaintext text-muted" style="font-size:14px;"></span>
-          <label id="senders-mailId" for="recipients-mailId"></label>
-          <label for="recipients-mailId" class="text-end text-nowrap" id="view-mail-timestamp"></label>
-          <div id="view-mail-body" class="border boder-black container container-fluid bg-white"></div>
-        </div>
+        <button type="submit" id="mail-read-unread" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" onclick="ChangeViewedStatus({{ id }})">
+          <i id="switchread" class="fas fa-2x"></i>
+        </button>
+
+        <button type="submit" id="mail-trash" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Mail" onclick="DeleteMail({{ id }})">
+          <i class="fas fa-trash fa-2x"></i>
+        </button>
+
+        <button type="submit" id="mail-fwd" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Forward Mail" onclick="fwd({{ id }})">
+          <i class="fas fa-share fa-2x"></i>
+        </button>
+
+      </div>
+      <div class="form-floating" id="view-mail-details">
+        <span id="recipients-mailId" class="form-control form-control-plaintext text-muted" style="font-size:14px;"></span>
+        <label id="senders-mailId" for="recipients-mailId"></label>
+        <label for="recipients-mailId" class="text-end text-nowrap" id="view-mail-timestamp"></label>
+        <div id="view-mail-body" class="border boder-black container container-fluid bg-white"></div>
       </div>
     </div>
+  </div>
 
-    <div id="compose-view" class="pt-4" style="display:block;">
-        <h3>New Email</h3>
-        <form action="{% url 'mail:index-page' 'sent' %}" id="compose-form" class="form" onsubmit="handleForm();window">
-          <div class="form-floating mb-4 row">
-            <input id="compose-recipients" class="form-control" oninput="validate();" placeholder="Recipients" required>
-            <label for="compose-recipients">Recipients <samp class="text-muted pb-3 ps-2" style="font-size:12px;"><kbd>Seperate email id with <kbd>,</kbd></kbd></samp></label>
-          </div>
-          <div class="form-floating mb-4 row">
-            <input class="form-control col" id="compose-subject" placeholder="Subject">
-            <label for="compose-subject" class="col-sm-1 form-label">Subject</label>
-          </div>
-          <div class="form-floating mb-4 row">
-            <textarea class="form-control" id="compose-body" placeholder="Body" style="height:200px;" required></textarea>
-            <label for="compose-body">Body</label>
-          </div>
-          <input type="submit" class="btn btn-primary mb-4 row" value="Send !"></input>
-        </form>
-    </div>
+  <div id="compose-view" class="pt-4" style="display:block;">
+    <h3>New Email</h3>
+    <form id="compose-form" class="form" onsubmit="handleForm(event);window">
+      <div class="form-floating mb-4 row">
+        <input id="compose-recipients" class="form-control" oninput="validate();" placeholder="Recipients" required>
+        <label for="compose-recipients">Recipients <samp class="text-muted pb-3 ps-2" style="font-size:12px;"><kbd>Seperate email id with <kbd>,</kbd></kbd></samp></label>
+      </div>
+      <div class="form-floating mb-4 row">
+        <input class="form-control col" id="compose-subject" placeholder="Subject">
+        <label for="compose-subject" class="col-sm-1 form-label">Subject</label>
+      </div>
+      <div class="form-floating mb-4 row">
+        <div class="form-control" id="compose_body" placeholder="Body" style="height:250px;" onclick='document.getElementById("compose_edit").focus();' required>
+          <span class="blockquote-footer lead" id="replyto" style="z-index: -20" contenteditable="false"></span>
+          <br>
+          <span id="compose_edit" contenteditable="true"></span>
+        </div>
+        <label for="compose_body">Body</label>
+      </div>
+      <input type="submit" class="btn btn-primary mb-4 row" value="Send !"></input>
+    </form>
+  </div>
 {% endblock %}
 
 {% block script %}

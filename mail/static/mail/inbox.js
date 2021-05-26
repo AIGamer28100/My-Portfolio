@@ -35,7 +35,13 @@ document.addEventListener('DOMContentLoaded', function load () {
   // By default, load the inbox
   // load_mailbox('inbox');
   if (id != "None") {
-    load_mail(mail, id);
+    if (mail === "reply") {
+      reply(id)
+    } else if (mail === "forward") {
+      fwd(id)
+    } else {
+      load_mail(mail, id);
+    }
   } else {
     if (window.location.pathname === '/hmail/u/compose') {
         compose_email();
@@ -67,7 +73,7 @@ function compose_email() {
   // Clear out composition fields
   document.querySelector('#compose-recipients').value = '';
   document.querySelector('#compose-subject').value = '';
-  document.querySelector('#compose-body').value = '';
+  document.querySelector('#compose_body').innerHTML = '<span id="replyto" style="z-index: -20" hidden></span><span id="compose_edit" contenteditable="true"></span>';
 }
 
 function load_mailbox(mailbox) {
@@ -198,7 +204,12 @@ function load_mail(mailbox,mail) {
   document.querySelector('#compose-view').style.display = 'none';
 
   fetch(`/hmail/emails/${mail}`)
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      window.location.pathname = `/hmail/u/${mailbox}`;
+    }
+    return response.json()
+  })
   .then(email => {
     document.querySelector('#view-mail-subject').innerHTML = `${email['subject']}`;
     document.querySelector('#senders-mailId').innerHTML = `<b style="font-size:20px;">${email['senderName']}</b><span class="text-muted"> &lt;${email['sender']}&gt; </span>`;
@@ -225,6 +236,7 @@ function load_mail(mailbox,mail) {
       document.querySelector('#archive-mail').title = "Move to Archived";
       document.querySelector('#switcharchive').classList.add("fa-archive");
     }
+    document.querySelector('.compose_edit_to').contentEditable = false
   });
 }
 
@@ -267,12 +279,20 @@ function validate() {
 }
 
 function handleForm(event) {
+  validate()
+  document.getElementById('compose_edit').contentEditable = false;
+  document.querySelector('#replyto').classList.add(`reply_to`);
+  document.querySelector("#replyto").removeAttribute("id");
+  document.querySelector('#compose_edit').classList.add(`compose_edit_to`);
+  document.querySelector("#compose_edit").removeAttribute("id");
+  document.querySelector('.compose_edit_to').contentEditable = false
+
   fetch('/hmail/emails', {
     method: 'POST',
     body: JSON.stringify({
       recipients: `${document.querySelector('#compose-recipients').value}`,
       subject: `${document.querySelector('#compose-subject').value}`,
-      body: `${document.querySelector('#compose-body').value}`,
+      body: `<div>${document.querySelector('#compose_body').innerHTML}<div>`,
     })
   })
   .then(response => response.json())
@@ -287,6 +307,7 @@ function handleForm(event) {
 function extractContent(s) {
   var span = document.createElement('span');
   span.innerHTML = s;
+
   return span.textContent || span.innerText;
 };
 
@@ -368,4 +389,71 @@ function DeleteMail(mail) {
     console.log(status)
   });
   window.location.pathname = `hmail`
+}
+
+function reply(mail) {
+  if (window.location.pathname !== `/hmail/u/reply/${mail}`) {
+      window.location.pathname = `/hmail/u/reply/${mail}`;
+  }
+
+  document.querySelector('#compose').classList.add('active');
+  // Show the mailbox and hide other views
+  document.querySelector('#email-view-contents').style.display = 'none';
+  document.getElementById('compose-view').style.display = "block";
+  document.getElementById('replyto').hidden = false;
+
+  //Fetch Reply mail
+  fetch(`/hmail/emails/${mail}`)
+  .then(response => response.json())
+  .then(email => {
+    document.querySelector('#compose-recipients').value = `${email['sender']} ,${email['recipientsName']}`;
+    validate();
+    document.querySelector('#compose-recipients').setAttribute('readonly', true);
+
+    if (email['subject'].startsWith('Re : ')) {
+      document.querySelector('#compose-subject').value = `${email['subject']}`;
+    } else {
+      if (email['subject'].startsWith('Fwd : ')) {
+        document.querySelector('#compose-subject').value = `${email['subject'].replace('Fwd : ', 'Re : ')}`;
+      } else {
+        document.querySelector('#compose-subject').value = `Re : ${email['subject']}`;
+      }
+    }
+
+    document.querySelector('#replyto').innerHTML = `On ${email['timestamp']}, ${email['senderName']}(${email['sender']}) wrote : <br><br>${email['body']}<br><br><hr>`;
+  });
+}
+
+function fwd(mail) {
+  if (window.location.pathname !== `/hmail/u/forward/${mail}`) {
+      window.location.pathname = `/hmail/u/forward/${mail}`;
+  }
+
+  document.querySelector('#compose').classList.add('active');
+  // Show the mailbox and hide other views
+  document.querySelector('#email-view-contents').style.display = 'none';
+  document.getElementById('compose-view').style.display = "block";
+  document.getElementById('replyto').hidden = false;
+
+  //Fetch Reply mail
+  fetch(`/hmail/emails/${mail}`)
+  .then(response => response.json())
+  .then(email => {
+    document.querySelector('#compose-recipients').value = ``;
+
+    if (email['subject'].startsWith('Fwd : ')) {
+      document.querySelector('#compose-subject').value = `${email['subject']}`;
+    } else {
+      if (email['subject'].startsWith('Re : ')) {
+        document.querySelector('#compose-subject').value = `${email['subject'].replace('Re : ', 'Fwd : ')}`;
+      } else {
+        document.querySelector('#compose-subject').value = `Fwd : ${email['subject']}`;
+      }
+    }
+
+    document.querySelector('#replyto').innerHTML = `On ${email['timestamp']}, ${email['senderName']}(${email['sender']}) wrote to ${email['recipientsName']}: <br><br>`
+    document.querySelector('#compose_edit').innerHTML = `${email['body']}`;
+    document.querySelector('#compose_body').setAttribute('readonly', true);
+    document.querySelector('#compose-subject').setAttribute('readonly', true);
+  });
 }
