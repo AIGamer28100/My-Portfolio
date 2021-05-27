@@ -352,7 +352,7 @@ function ChangeViewedStatus(mail, status) {
       fetch(`/hmail/emails/${mail}`,{
         method: 'PUT',
         body: JSON.stringify({
-          read: false
+          read: true
         })
       })
       .then(response => response.json())
@@ -364,7 +364,7 @@ function ChangeViewedStatus(mail, status) {
       fetch(`/hmail/emails/${mail}`,{
         method: 'PUT',
         body: JSON.stringify({
-          read: true
+          read: false
         })
       })
       .then(response => response.json())
