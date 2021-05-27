@@ -7,13 +7,10 @@
 
 {% block login %}
   <div class="login-container side-right-active" id="container">
-    <h2>Register</h2>
-
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
-
-    <div class="form signUp">
+    <div class="Lform signUp">
       <form action="{% url 'mail:register' %}" method="post">
           {% csrf_token %}
           <h1>Sign-Up</h1>
@@ -25,7 +22,7 @@
       </form>
     </div>
 
-    <div class="form signIn">
+    <div class="Lform signIn">
       <form action="{% url 'mail:login' %}" class="form" method="post">
           {% csrf_token %}
           <h1>Sign-In</h1>
