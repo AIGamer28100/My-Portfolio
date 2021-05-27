@@ -2,7 +2,17 @@ from django.shortcuts import render, get_object_or_404
 from .models import *
 
 # Create your views here.
-def product_list(request, category_slug=None):
+def product_list_main(request):
+    category = None
+    categories = Category.objects.all()
+    products = Product.objects.filter(available=True)
+    return render(request, 'ecart/product/list.html',{
+        'category': category,
+        'categories': categories,
+        'products': products,
+    })
+
+def product_list(request, category_slug):
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
