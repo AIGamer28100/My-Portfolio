@@ -211,7 +211,7 @@ function load_mail(mailbox,mail) {
     return response.json()
   })
   .then(email => {
-    document.querySelector('#view-mail-subject').innerHTML = `${email['subject']}`;
+    document.querySelector('#view-mail-subject').innerText = `${email['subject']}`;
     document.querySelector('#senders-mailId').innerHTML = `<b style="font-size:20px;">${email['senderName']}</b><span class="text-muted"> &lt;${email['sender']}&gt; </span>`;
 
     document.querySelector('#view-mail-timestamp').innerHTML = `${email['timestamp']}`;
@@ -236,7 +236,7 @@ function load_mail(mailbox,mail) {
       document.querySelector('#archive-mail').title = "Move to Archived";
       document.querySelector('#switcharchive').classList.add("fa-archive");
     }
-    document.querySelector('.compose_edit_to').contentEditable = false
+    document.getElementsByClassName('compose_edit_to').contentEditable = false
   });
 }
 
@@ -297,7 +297,7 @@ function handleForm(event) {
   })
   .then(response => response.json())
   .then(email => {
-    console.log(email);
+    return true
   });
   event.preventDefault();
   document.getElementById('sent').click();
@@ -324,7 +324,7 @@ function Archived(mail) {
       })
       .then(response => response.json())
       .then(status => {
-        console.log(status)
+        return true
       });
       window.location.pathname = `/hmail/u/inbox/${mail}`
     }
@@ -337,7 +337,7 @@ function Archived(mail) {
       })
       .then(response => response.json())
       .then(status => {
-        console.log(status)
+        return true
       });
       window.location.pathname = `/hmail/u/archive/${mail}`
     }
@@ -352,24 +352,24 @@ function ChangeViewedStatus(mail, status) {
       fetch(`/hmail/emails/${mail}`,{
         method: 'PUT',
         body: JSON.stringify({
-          read: true
+          read: false
         })
       })
       .then(response => response.json())
       .then(status => {
-        console.log(status)
+        return true
       });
     }
     else {
       fetch(`/hmail/emails/${mail}`,{
         method: 'PUT',
         body: JSON.stringify({
-          read: false
+          read: true
         })
       })
       .then(response => response.json())
       .then(status => {
-        console.log(status)
+        return true
       });
     }
   })
@@ -386,7 +386,7 @@ function DeleteMail(mail) {
   })
   .then(response => response.json())
   .then(status => {
-    console.log(status)
+    return true
   });
   window.location.pathname = `hmail`
 }
