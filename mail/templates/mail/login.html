@@ -55,5 +55,5 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'mail/login.js' %}" ></script>
+    <script src="{% static 'mail/login.js' %}?{% now 'U' %}" ></script>
 {% endblock %}

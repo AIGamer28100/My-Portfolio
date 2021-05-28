@@ -10,7 +10,7 @@
         <button type="submit" id="mail-reply" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Reply All" onclick="reply({{ id }})">
           <i class="fas fa-reply fa-2x"></i>
         </button>
-        
+
         <button type="submit" id="archive-mail" value="button" class="btn col" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" onclick="Archived({{ id }})">
           <i id="switcharchive" class="fas fa-2x"></i>
         </button>
@@ -62,5 +62,5 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'mail/inbox.js' %}" ></script>
+    <script src="{% static 'mail/inbox.js' %}?{% now 'U' %}" ></script>
 {% endblock %}

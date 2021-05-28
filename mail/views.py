@@ -117,7 +117,7 @@ def email(request, email_id):
         return JsonResponse({"error": "Email not found."}, status=404)
 
     # Return email contents
-    print("checking get method")
+    # print("checking get method")
     if request.method == "GET":
         return JsonResponse(email.serialize())
 
@@ -197,7 +197,7 @@ def register(request):
             user = User.objects.create_user(username, email, password)
             user.save()
         except IntegrityError as e:
-            print(e)
+            # print(e)
             return render(request, "mail/register.html", {
                 "message": "Email address already taken."
             })
