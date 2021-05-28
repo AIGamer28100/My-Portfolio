@@ -89,7 +89,7 @@ def new_post(request):
         new_post = Post(
             title = post['title'],
             slug = post['title'].lower().replace(" ","-"),
-            author = User.objects.get(id = 1),
+            author = request.user,
             body = post['body'],
             status = 'published',
         )
