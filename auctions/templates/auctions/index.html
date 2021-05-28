@@ -55,7 +55,7 @@
         {% if x.0 == List.id %}
             {% for j in x.1 %}
               <button>
-                <a class="btn btn-primary btn-sm" href='{% url "CategoryListing" j.id %}'>
+                <a class="btn btn-primary btn-sm" href='{% url "auctions:CategoryListing" j.id %}'>
                   {{ j }}
                 </a>
               </button>

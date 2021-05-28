@@ -433,8 +433,6 @@ def createlisting(request):
                 bid=request.POST['Bid']
             )
             new_bid.save()
-            Item.bid = request.POST['Bid']
-            Item.save()
             return HttpResponseRedirect(reverse("auctions:Item",args=[x.title,x.id]))
     return render(request, "auctions/createlisting.html",{
         "Wish": len(Wishlists),

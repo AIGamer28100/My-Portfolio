@@ -38,7 +38,7 @@
               </button>
             </form>
           {% else %}
-            <form action="{% url 'addwishlist' %}" method="post">
+            <form action="{% url 'auctions:addwishlist' %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="List_id" value="{{ List.id }}">
               <input type="hidden" name="page" value="cat">

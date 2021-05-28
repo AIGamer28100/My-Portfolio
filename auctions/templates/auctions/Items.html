@@ -67,17 +67,20 @@
         </form>
       {% else %}
         {% if winner %}
-          <h3 class="btn btn-success" style="font-weight: normal">
-            <a href="{% url 'auctions:Profile' winner.id %}" style="z-index:3;color:white;"><b>{{ winner }}</b></a> is the Winner for this Listing..
-          </h3>
-          <form class="form" action="{% url 'auctions:Item' List.title List.id %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="submit" value="transferownership">
-            <input type="hidden" name="TOto" value="{{ winner.id }}">
-            <button class="btn btn-info h3" style="font-weight: normal">
-              Transfer Ownership to {{ winner }}
-            </button>
-          </form>
+          {% if winner.id == user.id %}
+            <h3 class="btn btn-success" style="font-weight: normal">
+              <a href="{% url 'auctions:Profile' winner.id %}" style="z-index:3;color:white;"><b>{{ winner }}</b></a> is the Winner for this Listing..
+            </h3>
+          {% else %}
+            <form class="form" action="{% url 'auctions:Item' List.title List.id %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="submit" value="transferownership">
+              <input type="hidden" name="TOto" value="{{ winner.id }}">
+              <button class="btn btn-info h3" style="font-weight: normal">
+                Transfer Ownership to {{ winner }}
+              </button>
+            </form>
+          {% endif %}
         {% else %}
           <h3 class="btn btn-secondary" style="font-weight: normal">
             Listing Not Bidding
