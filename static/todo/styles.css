@@ -1,0 +1,272 @@
+html {
+  min-height: 100%;
+}
+
+body {
+  height: -webkit-fill-available;
+}
+
+#compose_edit {
+  outline: none;
+}
+#compose_body {
+  overflow-y: scroll;
+}
+
+.compose_edit_to {
+  outline: none;
+}
+
+.nav-link {
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.nav-item {
+  margin: 5px 5px;
+}
+
+.navbar-toggler {
+  border: 0px;
+}
+
+#mailbox-container{
+  padding: 10px 20px;
+}
+
+.mail {
+  font-size: 20px;
+  text-align: left;
+  color: black !important
+}
+
+.mail:hover {
+  border: 2px;
+  color: black !important
+}
+
+.mailbody {
+  font-size: 15px;
+}
+
+.read{
+  font-weight: lighter;
+  background: #fff !important;
+}
+
+.unread{
+  font-weight: normal;
+  background: linear-gradient(#fdfdfd, #f8f8f8) !important;
+}
+
+.mailbody {
+  font-weight: lighter !important;
+}
+
+.mailtimestamp {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+}
+
+.form-floating > #view-mail-timestamp {
+  --bs-blue: #0d6efd;
+  --bs-indigo: #6610f2;
+  --bs-purple: #6f42c1;
+  --bs-pink: #d63384;
+  --bs-red: #dc3545;
+  --bs-orange: #fd7e14;
+  --bs-yellow: #ffc107;
+  --bs-green: #198754;
+  --bs-teal: #20c997;
+  --bs-cyan: #0dcaf0;
+  --bs-white: #fff;
+  --bs-gray: #6c757d;
+  --bs-gray-dark: #343a40;
+  --bs-primary: #0d6efd;
+  --bs-secondary: #6c757d;
+  --bs-success: #198754;
+  --bs-info: #0dcaf0;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+  --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  --bs-font-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+  font-family: var(--bs-font-sans-serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #212529;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: right!important;
+  position: absolute;
+  top: 0;
+  left: 90%;
+  height: 100%;
+  padding: 1rem .75rem;
+  pointer-events: none;
+  border: 1px solid transparent;
+  transform-origin: 0 0;
+  transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+  opacity: .65;
+  transform: scale(.85) translateY(-.5rem) translateX(.15rem);
+}
+
+.login-container {
+  position: relative;
+  min-width: 768px;
+  width: 50%;
+  min-height: 500px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  margin-bottom: 0px !important;
+  margin: 100px auto;
+}
+
+.Lform{
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.Lform form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 0 60px;
+  background: #fff;
+}
+
+.Lform input{
+  border: none;
+  background: #f4f4f4;
+  padding: 15px;
+  min-width: 150px;
+  margin: 10px auto;
+  color: black;
+}
+
+.Lform input:focus{
+  outline: 2px solid #1976d3;
+}
+
+button.button{
+  padding: 15px 30px;
+  font-weight: 700;
+  font-size: 18px;
+  background: linear-gradient(#e37226, #ee9a13);
+  border: 1px solid #ee9a13;
+  border-radius: 25px;
+  outline: none;
+  margin: 15px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  transition: transform .2s ease-in;
+}
+
+button:active{
+  transform: scale(.9);
+}
+
+button.slide{
+  background: transparent;
+  border: 3px solid #fff;
+  border-radius: 40px;
+  color: #fff
+}
+
+.signIn{
+  left: 0;
+  width: 50%;
+  z-index: 3;
+}
+
+.signUp{
+  left: 0;
+  width: 50%;
+  z-index: 2;
+  opacity: 0;
+}
+
+.side {
+  z-index: 99;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  transition: transform .6s ease-in-out;
+  overflow: hidden;
+}
+
+.overlay{
+  position: relative;
+  background: linear-gradient(#6f42c1, #0d6efd);
+  color: #fff;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+}
+
+.overlayContainer{
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 40px;
+  transform: translateX(0);
+  transition: transform .6s ease-in-out;
+}
+
+.side-right{
+  right: 0;
+  transform: translateX(0);
+}
+
+.side-left{
+  transform: translateX(-20%);
+}
+
+#container.side-right-active .signIn{
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+#container.side-right-active .signUp{
+  transform: translateX(100%);
+  opacity: 1;
+}
+
+#container.side-right-active .side{
+  transform: translateX(-100%);
+}
+
+#container.side-right-active .overlay{
+  transform: translateX(50%);
+}
+
+#container.side-right-active .side-left{
+  transform: translateX(0);
+}
+
+#container.side-right-active .side-right{
+  transform: translateX(20%);
+}

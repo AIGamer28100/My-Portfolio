@@ -1,0 +1,22 @@
+{% extends "todo/layout.html" %}
+{% load static %}
+
+{% block title %}
+  TO DO
+{% endblock %}
+
+
+{% block body %}
+  <h1>Index</h1>
+  {% for i in Task %}
+    {{ i.title }}<br>
+  {% endfor %}
+
+  <br>
+  {% for i in UserTask %}
+      <hr>{{ i.user }}  :::<br>
+      {% for j in i.tasks.all %}
+        {{ j.title }} : {{ j.description }} : {{ j.timestamp }} : {{ j.get_status_display }} <br>
+      {% endfor %}<br>
+  {% endfor %}
+{% endblock %}

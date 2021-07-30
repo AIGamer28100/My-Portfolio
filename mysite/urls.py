@@ -28,6 +28,8 @@ urlpatterns = [
     path('encyclopedia/', include('encyclopedia.urls', namespace='encyclopedia')),
     path('auctions/', include('auctions.urls', namespace='auctions')),
     path('hmail/', include('mail.urls', namespace='mail')),
+    path('todo/', include('todo.urls', namespace='todo')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    

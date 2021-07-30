@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'encyclopedia.apps.EncyclopediaConfig',
     'mail.apps.MailConfig',
     'orders.apps.OrdersConfig',
+    'todo.apps.TodoConfig',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 CART_SESSION_ID = 'cart'
+
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -1,0 +1,59 @@
+{% extends "todo/layout.html" %}
+{% load static %}
+
+{% block title %}
+  TO DO-Login
+{% endblock %}
+
+{% block login %}
+  <div class="login-container" id="container">
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    <div class="Lform signUp">
+      <form action="{% url 'todo:register' %}" method="post">
+          {% csrf_token %}
+          <h1>Sign-Up</h1>
+          <input type="text" name="Name" placeholder="Username" required>
+          <input type="email" name="email" placeholder="Email Address" required>
+          <input type="password" name="password" placeholder="Password" required>
+          <input type="password" name="confirmation" placeholder="Confirm Password" required>
+          <button class="button">Sign Up</button>
+      </form>
+    </div>
+
+    <div class="Lform signIn">
+      <form action="{% url 'todo:login' %}" class="form" method="post">
+          {% csrf_token %}
+          <h1>Sign-In</h1>
+          <input autofocus type="name" name="username" placeholder="Username">
+          <input type="password" name="password" placeholder="Password">
+          <button class="button">Sign In</button>
+      </form>
+    </div>
+
+    <div class="side">
+      <div class="overlay">
+        <div class="overlayContainer side-right">
+          <h1>Welcome Back</h1>
+          <p>To keep connected, Login with your credentials.</p>
+          <br><br><br>
+          <footer>Don't Have a account ?<br>
+          <button class="button slide" id="signUp">Sign Up</button>
+          </footer>
+        </div>
+        <div class="overlayContainer side-left">
+          <h1>Hey, Welcome !</h1>
+          <p>Enter you personal Details to start you journey with us </p>
+          <br><br><br>
+          <footer class="small">Already Have a Account ... </footer>
+          <button class="button slide" id="signIn">Sign In</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'todo/login.js' %}?{% now 'U' %}" ></script>
+{% endblock %}
