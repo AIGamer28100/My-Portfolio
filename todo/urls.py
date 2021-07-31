@@ -9,8 +9,8 @@ urlpatterns = [
         path("login", views.login_view, name="login"),
         path("logout", views.logout_view, name="logout"),
         path("register", views.register, name="register"),
+        path("task/<int:id>", views.task, name="task"),
         path("add", views.add, name="add"),
-        path("<int:id>/open", views.open, name="open"),
-        path("<int:id>/close", views.close, name="close"),
-        path("<int:id>/delete", views.delete, name="delete"),
+        path("task/<int:id>/status", views.status, name="status"),
+        path("task/<int:id>/delete", views.delete, name="delete"),
     ]

@@ -1,0 +1,112 @@
+{% extends "todo/index.html" %}
+{% load static %}
+
+{% block modal %}
+	<!-- Main Modal -->
+	<div class="modal fade" id="myModal" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">{{ Task.title }}</h5>
+	        <a href="{% url 'todo:index' %}" type="button" class="btn-close" aria-label="Close"></a>
+	      </div>
+	      <div class="modal-body">
+	        <p>{{ Task.description }}</p>
+					<footer class="text-muted">
+						<span class="row">
+							<small class="col-auto me-auto">{{ Task.timestamp }}</small>
+							<span class="ms-auto col-auto">
+								<span class="form-check form-switch">
+									<form class="form" action="{% url 'todo:status' Task.id %}?next=task&nextid={{ Task.id }}" id="Tform{{ Task.id }}" method="post">
+										{% csrf_token %}
+										{% if Task.status == "open" %}
+											<input name="status{{ Task.id }}" class="form-check-input" type="checkbox" id="Tstatus{{ Task.id }}"  onclick='TstatusClick({{ Task.id }});'  data-bs-toggle="tooltip" data-bs-placement="top" title="Check to mark as Open Task" checked>
+										{% else %}
+											<input name="status{{ Task.id }}" class="form-check-input" type="checkbox" id="Tstatus{{ Task.id }}"  onclick='TstatusClick({{ Task.id }});'  data-bs-toggle="tooltip" data-bs-placement="top" title="Check to mark as Open Task">
+										{% endif %}
+									</form>
+								</span>
+							</span>
+						</span>
+					</footer>
+	      </div>
+	      <div class="modal-footer">
+	        <a href="{% url 'todo:index' %}" type="button" class="btn btn-secondary">Close</a>
+					<button type="button" class="btn btn-warning" name="button" data-bs-target="#EditModal" data-bs-toggle="modal">Edit</button>
+					<button type="button" class="btn btn-danger" name="button" data-bs-target="#DeleteModal" data-bs-toggle="modal">Delete</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- EditModal -->
+	<div class="modal fade" id="EditModal" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+				<form class="form" action="" method="post">
+					{% csrf_token %}
+					<div class="modal-header">
+						<div class="row g-4">
+							<label for="Title" class="col-auto col-form-label">Title</label>
+							<div class="col">
+								<input id="Title" name="Title" class="form-control" value="{{ Task.title }}" placeholder="Title" required>
+							</div>
+						</div>
+		      </div>
+		      <div class="modal-body">
+						<label for="Description" class="col-form-label">Description</label>
+						<textarea id="Description" name="Description" class="form-control" placeholder="Description">{{ Task.description }}</textarea>
+					</div>
+					<footer class="modal-body text-muted">
+						<span class="row">
+							<small class="col-auto me-auto">{{ Task.timestamp }}</small>
+							<span class="ms-auto col-auto">
+								<span class="form-check form-switch">
+									{% if Task.status == "open" %}
+										<input name="status" class="form-check-input" type="checkbox" data-bs-toggle="tooltip" data-bs-placement="top" title="Check to mark as Open Task" checked>
+									{% else %}
+										<input name="status" class="form-check-input" type="checkbox" data-bs-toggle="tooltip" data-bs-placement="top" title="Check to mark as Open Task">
+									{% endif %}
+								</span>
+							</span>
+						</span>
+					</footer>
+		      <div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-primary" name="button">Save Changes</button>
+		      </div>
+				</form>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- Delete Modal -->
+	<div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="DeleteModal" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Delete Task</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        Confirm Delete
+	      </div>
+	      <div class="modal-footer">
+					<form class="form" action="{% url 'todo:delete' Task.id %}" method="post">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-danger">DELETE !</button>
+					</form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+{% endblock %}
+
+
+{% block bodyscript %}
+<script>
+	$(document).ready(function(){
+		$("#myModal").modal('show');
+	});
+</script>
+{% endblock %}

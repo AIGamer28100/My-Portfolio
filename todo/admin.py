@@ -5,10 +5,10 @@ from django.contrib import admin
 from .models import *
 
 class UserTaskAdmin(admin.ModelAdmin):
-    list_display = ("user",)
+    list_display = ("id", "user",)
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ("title", "description", "timestamp", "status")
+    list_display = ("id", "title", "description", "timestamp", "status")
     list_editable = ('status',)
     list_filter = ("status", "timestamp")
 

@@ -5,36 +5,116 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 
-
 from .models import *
-
 
 # Create your views here.
 def index(request):
     # Authenticated users view their inbox
     if request.user.is_authenticated:
+        UserTask.objects.get_or_create(user = request.user)
         return render(request, "todo/index.html",{
-            "Task" : Task.objects.all(),
-            "UserTask" : UserTask.objects.all()
+            "UserTask" : UserTask.objects.filter(user = request.user)
         })
 
     # Everyone else is prompted to sign in
     else:
         return HttpResponseRedirect(reverse("todo:login"))
 
+@csrf_exempt
+@login_required
+def task(request, id):
+    # Display Task
+    if request.method == "GET":
+        task = Task.objects.get(id = id)
+        if task.tasks.filter(user=request.user).exists():
+            return render(request, "todo/task.html",{
+                "Task" : Task.objects.get(id = id),
+                "UserTask" : UserTask.objects.filter(user = request.user)
+            })
+        else:
+            return HttpResponseRedirect(reverse("todo:index"))
+    # Edit Task
+    if request.method == "POST":
+        task = Task.objects.get(id = id)
+        task.title = request.POST.get('Title')
+        task.description = request.POST.get('Description')
+        task.status = 'open' if request.POST.get(f'status{id}') else 'closed'
+        task.save()
+        return HttpResponseRedirect(reverse("todo:task", args=[id]))
+    # Must be via GET or POST
+    else:
+        return HttpResponseRedirect(reverse("todo:index"))
 
+
+
+@csrf_exempt
+@login_required
 def add(request):
-    pass
+    if request.method == "POST":
+        task = Task.objects.create(
+            title = request.POST.get('Title'),
+            description = request.POST.get('Description'),
+            status = 'open' if request.POST.get(f'status{id}') else 'closed'
+        )
 
+        task.save()
+        user = UserTask.objects.get(user = request.user)
+        user.tasks.add(task)
+        user.save()
+        try:
+            next = request.GET[f'next']
+            nextid = request.GET[f'nextid']
+            if nextid == "new":
+                nextid = task.id
+            return HttpResponseRedirect(reverse(f"todo:{next}", args=[nextid]))
+        except:
+            try:
+                next = request.GET[f'next'] #testing
+                return HttpResponseRedirect(reverse(f"todo:{next}"))
+            except:
+                return HttpResponseRedirect(reverse("todo:index"))
+        return HttpResponseRedirect(reverse("todo:index"))
+    # Must be via POST
+    else:
+        return HttpResponseRedirect(reverse("todo:index"))
+
+
+
+@csrf_exempt
+@login_required
+def status(request,id):
+    if request.method == "POST":
+        task = Task.objects.get(id = id)
+        if task.tasks.filter(user=request.user).exists():
+            task.status = 'open' if request.POST.get(f'status{id}') else 'closed'
+            task.save()
+            try:
+                next = request.GET[f'next']
+                nextid = request.GET[f'nextid']
+                return HttpResponseRedirect(reverse(f"todo:{next}", args=[nextid]))
+            except:
+                try:
+                    next = request.GET[f'next']
+                    return HttpResponseRedirect(reverse(f"todo:{next}"))
+                except:
+                    return HttpResponseRedirect(reverse("todo:index"))
+        return HttpResponseRedirect(reverse("todo:index"))
+    # Must be via PUT
+    else:
+        return HttpResponseRedirect(reverse("todo:index"))
+
+
+@csrf_exempt
+@login_required
 def delete(request,id):
-    pass
-
-def open(request,id):
-    pass
-
-def close(request,id):
-    pass
-
+    if request.method == "POST":
+        task = Task.objects.get(id = id)
+        if task.tasks.filter(user=request.user).exists():
+            task.delete()
+        return HttpResponseRedirect(reverse("todo:index"))
+        # Must be via POST
+    else:
+        return HttpResponseRedirect(reverse("todo:index"))
 
 
 def login_view(request):

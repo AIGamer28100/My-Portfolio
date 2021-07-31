@@ -1,8 +1,8 @@
-{% extends "todo/layout.html" %}
+{% extends "mail/layout.html" %}
 {% load static %}
 
 {% block title %}
-  TO DO-Register
+  HMail-Register
 {% endblock %}
 
 {% block login %}
@@ -26,7 +26,7 @@
       <form action="{% url 'todo:login' %}" class="form" method="post">
           {% csrf_token %}
           <h1>Sign-In</h1>
-          <input autofocus type="name" name="username" placeholder="Username">
+          <input autofocus type="email" name="email" placeholder="Email">
           <input type="password" name="password" placeholder="Password">
           <button class="button">Sign In</button>
       </form>
@@ -55,5 +55,5 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'todo/login.js' %}?{% now 'U' %}" ></script>
+    <script src="{% static 'mail/login.js' %}?{% now 'U' %}" ></script>
 {% endblock %}

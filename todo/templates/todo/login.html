@@ -1,4 +1,4 @@
-{% extends "todo/layout.html" %}
+{% extends "mail/layout.html" %}
 {% load static %}
 
 {% block title %}
@@ -6,10 +6,10 @@
 {% endblock %}
 
 {% block login %}
+{% if message %}
+  <div>{{ message }}</div>
+{% endif %}
   <div class="login-container" id="container">
-    {% if message %}
-        <div>{{ message }}</div>
-    {% endif %}
     <div class="Lform signUp">
       <form action="{% url 'todo:register' %}" method="post">
           {% csrf_token %}
@@ -55,5 +55,5 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'todo/login.js' %}?{% now 'U' %}" ></script>
+    <script src="{% static 'mail/login.js' %}?{% now 'U' %}" ></script>
 {% endblock %}

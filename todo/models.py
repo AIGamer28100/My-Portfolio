@@ -6,8 +6,8 @@ class Task(models.Model):
     """docstring for Task."""
 
     STATUS_CHOICES = (
-        (0, "Open"),
-        (1, "Closed"),
+        ("open", "Open"),
+        ("closed", "Closed"),
     )
     title = models.CharField(max_length = 64, )
     description = models.CharField(max_length = 500, blank=True )
@@ -16,4 +16,4 @@ class Task(models.Model):
 
 class UserTask(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
-    tasks = models.ManyToManyField(Task, blank = True, related_name = "tasks", )
+    tasks = models.ManyToManyField(Task, blank = True, null = True, related_name = "tasks", )
