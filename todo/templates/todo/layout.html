@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=0.5, shrink-to-fit=yes">
     <meta name="author" content="Hariharan S">
-
+    <link rel="icon" href="{% static 'todo/ToDo-icon.png' %}?{% now 'U' %}">
     <title>To - Do {% if user.is_authenticated %}{{ user.username }}{% endif %}</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Font Awesome icons (free version)-->
