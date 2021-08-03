@@ -3,8 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
+from django.db import IntegrityError
 from django.urls import reverse
 
+from mail.models import User as User_model
 from .models import *
 
 # Create your views here.
@@ -159,10 +161,10 @@ def register(request):
 
         # Attempt to create new user
         try:
-            user = User.objects.create_user(username, email, password)
+            user = User_model.objects.create_user(username, email, password)
             user.save()
         except IntegrityError as e:
-            # print(e)
+            print(e)
             return render(request, "todo/register.html", {
                 "message": "Email address already taken."
             })
