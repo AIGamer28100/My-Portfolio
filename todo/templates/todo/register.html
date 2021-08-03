@@ -1,4 +1,4 @@
-{% extends "mail/layout.html" %}
+{% extends "todo/layout.html" %}
 {% load static %}
 
 {% block title %}
@@ -7,9 +7,6 @@
 
 {% block login %}
   <div class="login-container side-right-active" id="container">
-    {% if message %}
-        <div>{{ message }}</div>
-    {% endif %}
     <div class="Lform signUp">
       <form action="{% url 'todo:register' %}" method="post">
           {% csrf_token %}
@@ -26,7 +23,7 @@
       <form action="{% url 'todo:login' %}" class="form" method="post">
           {% csrf_token %}
           <h1>Sign-In</h1>
-          <input autofocus type="email" name="email" placeholder="Email">
+          <input autofocus type="name" name="username" placeholder="Username">
           <input type="password" name="password" placeholder="Password">
           <button class="button">Sign In</button>
       </form>
@@ -35,16 +32,24 @@
     <div class="side">
       <div class="overlay">
         <div class="overlayContainer side-right">
-          <h1>Welcome Back</h1>
-          <p>To keep connected, Login with your credentials.</p>
+          {% if message %}
+            <h1>{{ message }}</h1>
+          {% else %}
+            <h1>Welcome Back</h1>
+            <p>To keep connected, Login with your credentials.</p>
+          {% endif %}
           <br><br><br>
           <footer>Don't Have a account ?<br>
           <button class="button slide" id="signUp">Sign Up</button>
           </footer>
         </div>
         <div class="overlayContainer side-left">
-          <h1>Hey, Welcome !</h1>
-          <p>Enter you personal Details to start you journey with us </p>
+          {% if message %}
+            <h1>{{ message }}</h1>
+          {% else %}
+            <h1>Hey, Welcome !</h1>
+            <p>Enter you personal Details to start you journey with us </p>
+          {% endif %}
           <br><br><br>
           <footer class="small">Already Have a Account ... </footer>
           <button class="button slide" id="signIn">Sign In</button>
