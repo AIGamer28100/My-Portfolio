@@ -135,7 +135,7 @@ def login_view(request):
             return HttpResponseRedirect(reverse("todo:index"))
         else:
             return render(request, "todo/login.html", {
-                "message": "Invalid email and/or password."
+                "message": "Invalid username and/or password."
             })
     else:
         return render(request, "todo/login.html")
