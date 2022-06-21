@@ -41,7 +41,7 @@
             "name" : "Hariharan S",
             "sameAs" : "http://aigamer.pythonanywhere.com/"
           },
-          "ratingValue": "91",
+          "ratingValue": "100",
           "bestRating": "100",
           "worstRating": "1",
           "ratingCount" : "10561"
@@ -128,7 +128,7 @@
                             <h3 class="mb-0">Hindustan Institute Of Technology and Science, Chennai</h3>
                             <div class="subheading mb-3">Bachelor of Technolgy</div>
                             <div>Computer Science Enginnering</div>
-                            <p>GPA: NA</p>
+                            <p>CGPA: 7.2  -  <span class="text-primary small">until 7<sup>th</sup> Semester</span></p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary">July 2018 - Pursuing</span></div>
                     </div>
@@ -156,7 +156,26 @@
             <section class="resume-section" id="experience">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Experience</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Junior Backend Developer</h3>
+                            <div class="subheading mb-3">Cyces Innovation Labs LLP</div>
+                            <p>A Junior Backend developer working on continuous integration and deployment of API with Django Rest Framework
+                                and performing minor bug fixes in React-Native Web app and mobile App</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">February 2022 - Present</span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Django Backend Developer (Internship)</h3>
+                            <div class="subheading mb-3">Cyces Innovation Labs LLP</div>
+                            <p>I was Django Backend Intern who handled support and feature development for live production applications, continuous integration and deployment.
+                                I was also given the opportunity to develop a new project from scratch with integrated custom-built django chat application.
+                            </p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">August 2021 - Jan 2022</span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Machine Learning with python ( Virtual Internship )</h3>
                             <div class="subheading mb-3">Verzeo</div>
@@ -310,11 +329,6 @@
                           </span>
                         </span>
                       </li>
-                      <!-- <li class="my-2 text-center">
-                        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-three-dots-vertical" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd" d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                        </svg>
-                      </li> -->
                     </ul>
                 </div>
             </section>
@@ -368,7 +382,7 @@
 
 
                     <a href="{% url 'blog:post_list' %}" class="card mx-1 project-cards" target="_blank" style="text-decoration:none">
-                      <img class="card-img-top p-3" src="https://www.flaticon.com/svg/static/icons/svg/60/60736.svg" alt="Blog">
+                      <img class="card-img-top p-3" src="https://www.shareicon.net/data/2017/06/05/886704_media_512x512.png" alt="Blog">
                       <div class="card-body text-center">
                         <h4 class="card-title">Blog Posts</h4>
                         <p class="card-text">A Basic Blog created using Django Framework</p>
@@ -413,18 +427,9 @@
                     <a href="{% url 'mail:index' %}" class="card mx-1 project-cards" target="_blank" style="text-decoration:none">
                       <img class="card-img-top p-3 lazyload" src="{% static 'mail/Logo.png' %}" alt="Hmail">
                       <div class="card-body text-center">
-                        <h4 class="card-title">Hmail( <i>BETA</i> Version )</h4>
-                        <div class="project-hover text-center">
-                          <div class="project-hover-content">
-                            <br>
-                            <i class="fas fa-vial fa-3x"></i>
-                            <br><br>
-                            <span class="h4"><b>BETA</b></span>
-                            <br><br>
-                          </div>
-                        </div>
+                        <h4 class="card-title">Hmail</h4>
                         <p class="card-text">Gmail, Yahoo like mailing system created using Django Framework and JavaSript for a better User-Interface.</p>
-                        <footer class="small text-muted blockquote-footer">Reply, Forward and login page Design are still under Construction.</footer>
+                        <footer class="small text-muted blockquote-footer"></footer>
                       </div>
                     </a>
 
@@ -473,6 +478,23 @@
                       </div>
                     </a>
 
+                    <a href="https://github.com/HariHaran-S-HITS/E-YOLO" class="card mx-1 project-cards" target="_blank" style="text-decoration:none">
+                      <img class="card-img-top p-3 lazyload" src="https://raw.githubusercontent.com/goktug97/PyYOLO/master/pyyologo.png" alt="E-YOLO">
+                      <div class="card-body text-center">
+                        <h4 class="card-title">E-YOLO (Enhanced YOLO)</h4>
+                        <div class="project-hover text-center">
+                          <div class="project-hover-content">
+                            <br>
+                            <i class="fas fa-vial fa-3x"></i>
+                            <br><br>
+                            <span class="h4"><b>BETA</b></span>
+                            <br><br>
+                          </div>
+                        </div>
+                        <p class="card-text">An Enhanced YOLO System that learns from its surroundings with the help of labeling from users.</p>
+                        <footer class="small text-muted blockquote-footer">UI and self training part are design phase. Edge detection is done. Clustering is under progress.</footer>
+                      </div>
+                    </a>
 
                   </div>
                 </div>
