@@ -5568,7 +5568,7 @@ a.close.disabled {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.875rem;
+  font-size: 0.975rem;
   word-wrap: break-word;
   opacity: 0;
 }
@@ -5578,8 +5578,8 @@ a.close.disabled {
 .tooltip .arrow {
   position: absolute;
   display: block;
-  width: 0.8rem;
-  height: 0.4rem;
+  width: 0.9rem;
+  height: 0.6rem;
 }
 .tooltip .arrow::before {
   position: absolute;
