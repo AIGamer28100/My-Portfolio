@@ -9,6 +9,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-u", "--username", help = "Username")
 parser.add_argument("-t", "--api_token", help = "API Token")
 parser.add_argument("-d", "--domain", help = "Web App Domain  Ex. 'user.pythonanywhere.com', etc ")
+parser.add_argument("-w", "--working_directory", help = "Absolute Path to git directory in pythonanywhere")
 
 args = parser.parse_args()
 
@@ -16,6 +17,7 @@ args = parser.parse_args()
 username = args.username
 api_token = args.api_token
 domain_name = args.domain
+working_directory = args.working_directory
 
 headers={"Authorization": f'Token {api_token}'}
 
@@ -41,7 +43,7 @@ console_response = requests.post(
     f"{host}/consoles/",
     data={
         "executable": "/bin/bash",
-        "working_directory": "/home/AIGAMER/aigamer.pythonanywhere.com"
+        "working_directory": working_directory,
     },
     headers=headers
 )
