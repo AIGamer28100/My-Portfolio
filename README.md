@@ -23,14 +23,14 @@ This also conatin other Django Projects that I have built, which is can be found
 
 ## Utils
 
-I have also created a python script to delpoy the application in pythonanywhere
+I have also created a python script to delpoy and reload the application in pythonanywhere
 
-**NOTE**: Run the script after pushing the code to your git repository 
+> **NOTE**: Run the script after pushing the code to your git repository
 
 #### Prerequisite
 
 - Account in [pythonanywhere.com](https://www.pythonanywhere.com)
-- Create a API toekn from settings
+- Create a API token from settings
 - Project already setup in pythonanywhere and deloyed manually atleast once
 
 Now Run [deploy.py](deploy.py) script using the below code
