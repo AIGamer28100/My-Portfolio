@@ -73,7 +73,7 @@ if console_response.status_code == 201:
 
     # Run Git commands in the console
     git_commands = [
-        "git pull --rebase --autostash",
+        "git pull --rebase --autostash \n",
         # Add more Git commands as needed
     ]
 
@@ -91,23 +91,24 @@ if console_response.status_code == 201:
             print(f"Status code: {command_response.status_code}")
             print(f"Command failed: {command}")
             print(f"Response: {command_response.text}")
+            
+        time.sleep(60)
+        delete_response = requests.delete(
+            f"{host}/consoles/{console_id}/",
+            headers=headers
+        )
+
+        if delete_response.status_code == 204:
+            print("Console deleted successfully.")
+        else:
+            print("Failed to delete the console.")
+            print(f"Status code: {delete_response.status_code}")
 
 else:
     print("Failed to create a new console.")
     print(f"Status code: {console_response.status_code}")
     
-delete_response = requests.delete(
-    f"{host}/consoles/{console_id}/",
-    headers=headers
-)
 
-if delete_response.status_code == 204:
-    print("Console deleted successfully.")
-else:
-    print("Failed to delete the console.")
-    print(f"Status code: {delete_response.status_code}")
-    
-    
 # Reload the web app
 reload_response = requests.post(
     f"{host}/webapps/{domain_name}/reload/",
@@ -120,4 +121,3 @@ else:
     print("Failed to reload the web app.")
     print(f"Status code: {reload_response.status_code}")
     print(f"Response: {reload_response.text}")
-
