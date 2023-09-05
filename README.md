@@ -6,18 +6,18 @@ You can access my portfolio at [aigamer.pythonanywhere.com](https://aigamer.pyth
 
 This also conatin other Django Projects that I have built, which is can be found [here](https://aigamer.pythonanywhere.com/#projects) and also listed below - 
 
-- [Movie Lens Dataset - Visualisation and Predictions](https://aigamer28100.github.io/Movie-Lens-Dataset-Visualization-and-Prediction/)
-- [Google Serach - Google Search Page recreated using HTML and CSS.](https://aigamer28100.github.io/Google-Search/)
-- [The Encyclopedia - My version of Wikipedia recreated using Django](https://aigamer.pythonanywhere.com/encyclopedia/)
-- [E-Commerce - eBay like E-Commerce Autions Site using Django Framework](https://aigamer.pythonanywhere.com/auctions/)
-- [Blog Post - A basic Blog posting site using Django](https://aigamer.pythonanywhere.com/blog/)
-- [E-Shopping - Amazon, Flipkart like cloud shopping platform](https://aigamer.pythonanywhere.com/ecart/)
+- [Movie Lens Dataset](https://aigamer28100.github.io/Movie-Lens-Dataset-Visualization-and-Prediction/)  - Visualisation and Predictions
+- [Google Serach](https://aigamer28100.github.io/Google-Search/) - Google Search Page recreated using HTML and CSS.
+- [The Encyclopedia](https://aigamer.pythonanywhere.com/encyclopedia/) - My version of Wikipedia recreated using Django
+- [E-Commerce](https://aigamer.pythonanywhere.com/auctions/) - eBay like E-Commerce Autions Site using Django Framework
+- [Blog Post](https://aigamer.pythonanywhere.com/blog/) - A basic Blog posting site using Django
+- [E-Shopping](https://aigamer.pythonanywhere.com/ecart/) - Amazon, Flipkart like cloud shopping platform
 - [Social Distaning Enforcement System (SDES)](https://github.com/AIGamer28100/Social-Distance-Detection-using-OpenCV)
-- [HMAIL - E-Mailing System](https://aigamer.pythonanywhere.com/hmail/)
+- [HMAIL](https://aigamer.pythonanywhere.com/hmail/) - E-Mailing System
 - [Verzeo Internship Project](https://github.com/AIGamer28100/Verzeo-Internship)
-- [OCR - An Offline Handwritten Text Segmentation and Recognition System with TensorFlow](https://github.com/AIGamer28100/Design-Project-II)
+- [OCR](https://github.com/AIGamer28100/Design-Project-II) - An Offline Handwritten Text Segmentation and Recognition System with TensorFlow
 - [A Basic ToDo App](https://aigamer.pythonanywhere.com/todo/)
-- [E-YOLO (Enhanced YOLO) - This is a proof of concept code base used for a conference paper](https://github.com/HariHaran-S-HITS/E-YOLO)  -  [Link to Conference Paper](https://ieeexplore.ieee.org/document/9885410)
+- [E-YOLO (Enhanced YOLO)](https://github.com/HariHaran-S-HITS/E-YOLO) - This is a proof of concept code base used for a conference paper - Link to Conference [Paper](https://ieeexplore.ieee.org/document/9885410)
 
 
 
