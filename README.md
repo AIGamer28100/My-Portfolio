@@ -19,6 +19,14 @@ This also conatin other Django Projects that I have built, which is can be found
 - [A Basic ToDo App](https://aigamer.pythonanywhere.com/todo/)
 - [E-YOLO (Enhanced YOLO)](https://github.com/HariHaran-S-HITS/E-YOLO) - This is a proof of concept code base used for a conference paper - Link to Conference [Paper](https://ieeexplore.ieee.org/document/9885410)
 
+> For testing you can use the below user credentional in case of login required
+> 
+> **Username** : Demo
+> 
+> **Email Id** : demo@email.com
+> 
+> **Password** : demo@123
+
 
 
 ## Utils
