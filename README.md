@@ -2,7 +2,7 @@
 
 This my personal portfolio is build using Django and delpoyed in [pythonanywhere.com](https://www.pythonanywhere.com/)
 
-You can access the site at [aigamer.pythonanywhere.com](https://aigamer.pythonanywhere.com/)
+You can access my portfolio at [aigamer.pythonanywhere.com](https://aigamer.pythonanywhere.com/)
 
 This also conatin other Django Projects that I have built, which is can be found [here](https://aigamer.pythonanywhere.com/#projects) and also listed below - 
 
