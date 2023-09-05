@@ -6,14 +6,16 @@ import webbrowser
 # Initialize parser
 parser = argparse.ArgumentParser()
 
-parser.add_argument("api_token", help = "API Token")
+parser.add_argument("-u", "--username", help = "Username")
+parser.add_argument("-t", "--api_token", help = "API Token")
+parser.add_argument("-d", "--domain", help = "Web App Domain  Ex. 'user.pythonanywhere.com', etc ")
 
 args = parser.parse_args()
 
 # Replace with your PythonAnywhere username and API token
-username = "AIGAMER"
+username = args.username
 api_token = args.api_token
-domain_name = "aigamer.pythonanywhere.com"
+domain_name = args.domain
 
 headers={"Authorization": f'Token {api_token}'}
 
