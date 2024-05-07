@@ -1694,21 +1694,40 @@ section#about .container {
 
 section#about .circle.circle1 {
   position: absolute;
-  top: 350px;
-  left: 350px;
+  top: 35%;
+  left: 35%;
 }
 
 @media screen and (max-width: 480px) {
   section#about .circle.circle1 {
     left: inherit;
-    right: 25px;
+    right:10%;
   }
 }
 
 section#about .circle.circle2 {
   position: absolute;
-  top: 50px;
-  right: 350px;
+  top: 10%;
+  right: 35%;
+}
+
+
+section#about .circle.circle3 {
+  position: absolute;
+  bottom: 10%;
+  left: 15%;
+}
+
+section#about .circle.circle4 {
+  position: absolute;
+  bottom: 10%;
+  right: 15%;
+}
+
+section#about .circle.circle5 {
+  position: absolute;
+  top: 40%;
+  right: 18%;
 }
 
 section#about .wrap-services {
@@ -1717,10 +1736,10 @@ section#about .wrap-services {
   -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
           transform: translateY(-50%);
-  right: 0px;
+  right: 10%;
   background-color: #1F1F1F;
   padding: 46px;
-  min-width: 18%;
+  min-width: 25%;
   box-shadow: 0 0 38px rgba(0, 0, 0, 0.3), 0 0 12px rgba(0, 0, 0, 0.22);
   z-index: 1;
   text-align: right;
@@ -1998,8 +2017,8 @@ section#works figure em.line {
 }
 
 section#works figcaption {
-  font-size: 60px;
-  line-height: 80px;
+  font-size: 40px;
+  line-height: 40px;
   font-weight: 700;
   letter-spacing: 2px;
   margin-top: -90px;
@@ -2007,6 +2026,7 @@ section#works figcaption {
   position: relative;
   z-index: 4;
   font-family: "Product Sans", sans-serif;
+  text-align: center;
 }
 
 @media screen and (max-width: 480px) {
@@ -2084,6 +2104,12 @@ section#awards .circle.circle2 {
   position: absolute;
   top: 550px;
   left: 275px;
+}
+
+section#awards .circle.circle2 {
+  position: absolute;
+  top: 22%;
+  right: 35%;
 }
 
 section#awards ul li {
@@ -2620,4 +2646,12 @@ button.mfp-close:hover {
 .fadeInUp {
   -webkit-animation-name: fadeInUp;
   animation-name: fadeInUp;
+}
+
+
+#credits {
+  margin: 3% 0;
+  font-size: 18px;
+  color: #ffffff;
+  z-index: 1000;
 }
