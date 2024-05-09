@@ -1785,9 +1785,13 @@ section#about .wrap-services ul li span:after {
   z-index: -1;
 }
 
+section#works {
+  padding-top: 150px;
+}
+
 @media screen and (max-width: 991px) {
   section#works {
-    padding-top: 150px;
+    padding-top: 250px;
   }
 }
 
@@ -2127,6 +2131,7 @@ section#awards ul li span {
 }
 
 footer {
+  padding-top: 100px;
   padding-bottom: 100px;
 }
 

@@ -16,4 +16,4 @@ class Task(models.Model):
 
 class UserTask(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
-    tasks = models.ManyToManyField(Task, blank = True, null = True, related_name = "tasks", )
+    tasks = models.ManyToManyField(Task, blank = True, related_name = "tasks", )
