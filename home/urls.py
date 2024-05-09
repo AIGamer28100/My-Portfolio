@@ -5,5 +5,6 @@ app_name = 'home'
 
 urlpatterns = [
         # post views
-        path('', views.index, name='index'),
+        path('v1/', views.v1, name='v1'),
+        path('', views.v2, name='v2'),
     ]

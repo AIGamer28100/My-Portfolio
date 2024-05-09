@@ -4,5 +4,8 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
-def index(request):
-    return render(request, 'home/index.html')
+def v1(request):
+    return render(request, 'v1/index.html')
+
+def v2(request):
+    return render(request, 'v2/index.html')
