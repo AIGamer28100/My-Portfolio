@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: 
+Crawl-delay: 15
+Disallow: /cgi-bin/
+Disallow: /admin/
+Disallow: /static/
+
+Sitemap: https://aigamer.dev http://aigamer.dev https://www.aigamer.dev http://aigamer.dev
