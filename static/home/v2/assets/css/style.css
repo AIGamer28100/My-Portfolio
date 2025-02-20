@@ -29,15 +29,30 @@
 /*-------------------------------------------------*/
 /* =  2.General
 /*-------------------------------------------------*/
+html {
+  max-width: 100vw;
+}
+
+
 body {
   font: 100% "Product Sans", sans-serif;
-  color: white;
+  color: whitesmoke;
   background-color: #1A1A1A;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   -moz-font-feature-settings: "liga" on;
+  font-feature-settings: "liga" on;
+  font-size: 1em;
+  max-height: 100vh;
+  max-width: 100vw !important;
 }
+
+.stop-scrolling {
+  height: 200%;
+  overflow: hidden;
+}
+
 
 h2, h3 {
   font-size: 120px;
@@ -180,6 +195,10 @@ p.small-height {
 ::-moz-selection {
   background: #0097A7;
   color: white;
+}
+
+::-webkit-scrollbar {
+  width: 0;
 }
 
 ::selection {
@@ -890,22 +909,23 @@ img[class~="center"] {
 }
 
 /*-------------------------------------------------*/
-/* =  4.Main Navigation
+/* = Header Banner Logo */
 /*-------------------------------------------------*/
+
 header {
-  position: relative;
-  z-index: 999;
+  position: absolute;
+  z-index: -999;
 }
 
 header.transparent {
   background-color: rgba(34, 34, 34, 0) !important;
-  transition: background-color .4s ease-in;
+  transition: background-color 0.5s ease-in-out;
 }
 
 header nav.navbar {
   height: auto;
   box-shadow: none;
-  border-radius: 0;
+  border-radius: 5vh;
   background-image: none;
   background-color: transparent;
   border: none;
@@ -914,28 +934,69 @@ header nav.navbar {
 
 header nav.navbar #logo {
   width: auto;
-  padding-left: 35px;
-  padding-top: 15px;
+  padding: 2vh 0 0 5vh;
   position: relative;
   float: left;
 }
 
-@media screen and (max-width: 991px) {
-  header nav.navbar #logo {
-    padding-left: 5px;
-    padding-top: 0px;
-  }
-}
-
 header nav.navbar #logo a.navbar-brand img {
-  height: 55px;
-  width: auto;
-  transform: translateX(150%);
+  width: 4vw;
 }
 
 /*-------------------------------------------------*/
 /* =  5.Main Settings
 /*-------------------------------------------------*/
+
+main,
+#width-error,
+#height-error {
+    display: none;
+}
+
+#ratio-error {
+    display: block;
+}
+
+@media screen and (min-aspect-ratio: 4/6) {
+    main {
+        display: block;
+    }
+
+    #ratio-error,
+    #width-error,
+    #height-error {
+        display: none;
+    }
+}
+
+@media screen and (max-height: 300px) {
+
+    main,
+    #width-error,
+    #ratio-error {
+        display: none;
+    }
+
+    #height-error {
+        display: block;
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 300px) {
+
+    main,
+    #height-error,
+    #ratio-error {
+        display: none;
+    }
+
+    #width-error {
+        display: block;
+        font-size: 1em;
+    }
+}
+
 [class*='col-'] {
   padding-left: 0;
   padding-right: 0;
@@ -965,54 +1026,48 @@ header nav.navbar #logo a.navbar-brand img {
 
 #grid {
   position: fixed;
-  width: 100%;
+  width: 100vw;
+  padding: 0 10vw;
+  z-index: -100;
 }
 
-#grid .grid-line {
+.grid-line {
   height: 0vh;
-  border-left: .5px solid rgba(0, 0, 17, 0.425);
+  border-left: .5px solid rgba(0, 0, 17, 0.725);
 }
 
-#grid .grid-line.hey {
+#grid .grid-line.loaded {
   height: 100vh;
-  transition: height 1.2s ease;
+  transition: all 1.2s ease-in-out;
 }
 
-#grid .col-sm-3:last-child .grid-line {
+#grid .col-3:last-child .grid-line {
   height: 0vh;
-  border-left: .5px solid rgba(0, 0, 17, 0.425);
-  border-right: .5px solid rgba(0, 0, 17, 0.425);
+  border-left: 0.5px solid rgba(0, 0, 17, 0.725);
+  border-right: 0.5px solid rgba(0, 0, 17, 0.725);
 }
 
-#grid .col-sm-3:last-child .grid-line.hey {
+#grid .col-3:last-child .grid-line.loaded {
   height: 100vh;
-  transition: height 1.2s ease;
+  transition: all 1.2s ease-in-out;
 }
+
+/*-------------------------------------------------*/
+/* = Wrap Social
+/*-------------------------------------------------*/
 
 #wrap-social {
   position: fixed;
-  top: 30%;
-  right: -200px;
-  z-index: 99;
-}
-
-@media screen and (max-width: 991px) {
-  #wrap-social {
-    right: -225px;
-    top: 25%;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  #wrap-social {
-    display: none;
-  }
+  width: max-content;
+  right: 2vh;
+  top: 50%;
+  z-index: 10;
 }
 
 #wrap-social ul {
   -webkit-transform: rotate(-90deg);
-      -ms-transform: rotate(-90deg);
-          transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: translateX(40%) rotate(-90deg) translateY(50%);
 }
 
 #wrap-social ul li {
@@ -1023,59 +1078,42 @@ header nav.navbar #logo a.navbar-brand img {
   color: white;
   font-family: "Inconsolata", monospace;
   text-transform: uppercase;
-  font-size: 18px;
-  line-height: 28px;
-  margin-right: 36px;
+  padding: 0 3vh;
+  font-size: 2vh;
   text-decoration: none;
 }
 
+/* ------------------------------------------------ */
+/* = Share This Button */
+/* ------------------------------------------------ */
+
 #share-this {
   position: fixed;
-  left: -5px;
-  top: calc(100vh - 130px);
+  top: 85vh;
   z-index: 99;
-}
-
-@media screen and (min-width: 1024px) and (max-width: 1024px) {
-  #share-this {
-    left: -25px;
-  }
-}
-
-@media screen and (max-width: 991px) {
-  #share-this {
-    left: inherit;
-    right: -75px;
-    top: calc(100vh - 110px);
-  }
-}
-
-@media screen and (max-width: 767px) {
-  #share-this {
-    -webkit-transform: rotate(-90deg);
-        -ms-transform: rotate(-90deg);
-            transform: rotate(-90deg);
-    right: -60px;
-    top: 58px;
-  }
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg);
 }
 
 #share-this a {
-  -webkit-transform: rotate(-90deg);
-      -ms-transform: rotate(-90deg);
-          transform: rotate(-90deg);
   color: white;
   font-family: "Inconsolata", monospace;
-  font-size: 18px;
-  line-height: 28px;
-  margin-right: 36px;
+  font-size: 2vh;
   background: #1F1F1F;
-  padding: 0 8px;
+  padding: 1vw;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
 }
 
 #share-this a i {
-  margin-left: 8px;
+  margin-left: 1vh;
 }
+
+
+/* ------------------------------------------------ */
+/* = Share This Banner */
+/* ------------------------------------------------ */
 
 #banner-share {
   position: fixed;
@@ -1087,38 +1125,7 @@ header nav.navbar #logo a.navbar-brand img {
   z-index: 999;
   visibility: hidden;
   opacity: 0;
-  transition: opacity .4s ease;
-}
-
-@media screen and (max-width: 767px) {
-  #banner-share {
-    padding: 80px 0;
-  }
-}
-
-#banner-share .wrap {
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
-  left: 0;
-  right: 0;
-}
-
-@media screen and (max-width: 767px) {
-  #banner-share .wrap {
-    position: relative;
-    top: inherit;
-    left: inherit;
-    -webkit-transform: none;
-        -ms-transform: none;
-            transform: none;
-  }
-}
-
-#banner-share ul {
-  text-align: center;
+  transition: opacity 0.2s ease-in-out;
 }
 
 #banner-share ul li {
@@ -1126,67 +1133,52 @@ header nav.navbar #logo a.navbar-brand img {
 }
 
 #banner-share ul li a {
-  width: 150px;
-  height: 150px;
+  width: 20vh;
+  height: 20vh;
   background-color: #1F1F1F;
-  margin: 25px;
-  line-height: 150px;
-  font-size: 30px;
-  box-shadow: 0 0 38px rgba(0, 0, 0, 0.3), 0 0 12px rgba(0, 0, 0, 0.22);
-  display: inline-block;
+  color: white;
+  margin: 2vh;
+  line-height: 20vh;
+  font-size: 2.5em;
+  box-shadow: 0 0 1em #00000090, 0 0 .7em #1f1f1f;
+  display: block;
+  transition: all 1s ease-in-out;
+}
+
+#banner-share ul li a:hover {
+  transform: scale(1.2);
+  transition: all 0.2s ease-in-out;
 }
 
 #banner-share .close-button {
   position: fixed;
-  left: 0px;
-  top: calc(100vh - 125px);
+  top: 85vh;
+  left: 2vh;
   -webkit-transform: rotate(-90deg);
-      -ms-transform: rotate(-90deg);
-          transform: rotate(-90deg);
-}
-
-@media screen and (min-width: 1024px) and (max-width: 1024px) {
-  #banner-share .close-button {
-    left: -17px;
-  }
-}
-
-@media screen and (max-width: 991px) {
-  #banner-share .close-button {
-    left: calc(100vw - 82px);
-    top: calc(100vh - 105px);
-  }
-}
-
-@media screen and (max-width: 600px) {
-  #banner-share .close-button {
-    left: calc(100vw - 112px);
-    top: 0;
-    width: 189px;
-  }
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg);
 }
 
 #banner-share .close-button a {
   color: white;
   font-family: "Inconsolata", monospace;
-  font-size: 18px;
-  line-height: 28px;
-  margin-right: 36px;
+  font-size: 2.2vh;
   text-decoration: none;
   background: #1F1F1F;
-  padding: 0 8px;
+  padding: 1vw;
 }
 
 #banner-share .close-button a i {
-  margin-left: 8px;
+  margin-left: 1vw;
 }
 
 #banner-share.is-open {
   visibility: visible;
   opacity: 1;
-  overflow: auto;
-  transition: opacity .4s ease;
+  transition: opacity 0.2s ease-in-out;
 }
+
+/* ------------------------------------------------ */
 
 #about_skills {
   max-width: 75%;
@@ -1283,7 +1275,7 @@ section .circle.md {
 
 section#intro .container {
   position: relative;
-  height: 100%;
+  height: 100vh !important;
 }
 
 section#intro .container .row {
@@ -1991,9 +1983,10 @@ footer .wrap-social ul li a {
   text-decoration: none;
 }
 
-/*-------------------------------------------------*/
-/* =  15.Loader
-/*-------------------------------------------------*/
+/* ------------------------------------------------ */
+/* = Loader */
+/* ------------------------------------------------ */
+
 .pace {
   -webkit-pointer-events: none;
   pointer-events: none;
@@ -2014,9 +2007,10 @@ footer .wrap-social ul li a {
   top: 0;
   right: 100%;
   width: 100%;
-  height: 2px;
-  border-radius: 4px;
+  height: 5px;
 }
+
+/* Main Loader (Reveal First) */
 
 #myloader .reveal-first {
   position: fixed;
@@ -2025,108 +2019,42 @@ footer .wrap-social ul li a {
   right: 0;
   bottom: 0;
   background-color: #1A1A1A;
-  z-index: 2001;
-  transition: -webkit-transform 0.58s cubic-bezier(0.694, 0.048, 0.335, 1);
-  transition: transform 0.58s cubic-bezier(0.694, 0.048, 0.335, 1);
-  transition: transform 0.58s cubic-bezier(0.694, 0.048, 0.335, 1), -webkit-transform 0.58s cubic-bezier(0.694, 0.048, 0.335, 1);
+  z-index: 999;
+  transition: -webkit-transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;
 }
 
 #myloader .reveal-first.is-active {
   -webkit-transform: translateY(101%);
-      -ms-transform: translateY(101%);
-          transform: translateY(101%);
+  -ms-transform: translateY(101%);
+  transform: translateY(101%);
 }
 
 #myloader .reveal-first .text-wrap {
   position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
-  max-width: 80%;
-  margin: 0 auto;
-  text-align: center;
   left: 0;
   right: 0;
+  top: 50vh;
+  max-width: 80vw;
+  margin: 0 auto;
+  text-align: center;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 #myloader .reveal-first .text-wrap h3 {
-  font-size: 80px;
-  line-height: 90px;
-}
-
-@media screen and (max-width: 600px) {
-  #myloader .reveal-first .text-wrap h3 {
-    font-size: 60px;
-    line-height: 80px;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  #myloader .reveal-first .text-wrap h3 {
-    font-size: 50px;
-    line-height: 70px;
-  }
-}
-
-@media screen and (max-width: 410px) {
-  #myloader .reveal-first .text-wrap h3 {
-    font-size: 40px;
-    line-height: 60px;
-  }
+  font-size: 10vh;
+  line-height: 10vh;
+  font-weight: 700;
+  color: #FF5252;
 }
 
 #myloader .reveal-first .text-wrap img {
-  width: 256px;
+  width: 20vh;
   margin: 0 auto;
   position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
-}
-
-#myloader .reveal-second {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #000;
-  z-index: 2000;
-  transition: -webkit-transform 0.58s cubic-bezier(0.694, 0.048, 0.335, 1);
-  transition: transform 0.58s cubic-bezier(0.694, 0.048, 0.335, 1);
-  transition: transform 0.58s cubic-bezier(0.694, 0.048, 0.335, 1), -webkit-transform 0.58s cubic-bezier(0.694, 0.048, 0.335, 1);
-}
-
-#myloader .reveal-second.is-active {
-  -webkit-transform: translateY(101%);
-      -ms-transform: translateY(101%);
-          transform: translateY(101%);
-  transition-delay: .12s;
-}
-
-#loader-content {
-  position: fixed;
-  z-index: 2000;
-  background: transparent;
-  text-align: center;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: 0 auto;
-  opacity: 1;
-}
-
-#loader-content img {
-  max-width: 250px;
-  margin: 0 auto;
-  position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
 }
 
 /*-------------------------------------------------*/
