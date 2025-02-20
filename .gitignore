@@ -131,3 +131,4 @@ dmypy.json
 
 *sqlite3
 staticfiles
+__pycache__/
